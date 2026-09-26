@@ -1,0 +1,283 @@
+{
+  "schema": "spritemcp.outfit_plan.v2",
+  "plan_id": "desert_wanderer-outfit-bbc76e8ca444-fed2c928",
+  "name": "desert_wanderer",
+  "brief": "Desert wanderer / mummy-like vagabond: entire body wrapped in aged linen bandages, warm brown/tan skin showing in gaps between wraps, glowing yellow eyes through face slits. Dusty desert survivor look, no armor or weapons \u2014 only cloth wraps, ragged belt sash, and wrapped feet.",
+  "created_at": "2026-09-26T18:11:48.513956+00:00",
+  "plan": {
+    "overall_look": "Side-view desert vagabond fully wrapped in dusty cream linen bandages from head to toe. Warm brown skin peeks through thin gaps between wraps on arms, legs, and face. Face almost fully covered by horizontal bandage strips with two narrow eye slits revealing bright yellow eyes. Torso wrapped in overlapping diagonal and horizontal strips with a darker frayed sash/belt at the waist. Arms and legs tightly wrapped; hands and feet covered in bandage mitts/wraps with a few brown skin strips visible at knuckles and ankles. Silhouette stays close to the body with slight overhang from loose bandage ends at the head rear and waist sash.",
+    "slots": {
+      "upper_arm_far": {
+        "skip": false,
+        "visual_notes": "Cream/aged linen (#E8D9B8) horizontal bandage wraps covering the upper arm silhouette; leave 1-2 thin diagonal gaps showing warm brown skin (#A analog 8B5A3C). Slight darker wrap edge lines (#C4B08A) for strip separation. No shading bake.",
+        "parent_parts": [
+          "upper_arm_far"
+        ],
+        "body_parts": [
+          "upper_arm_far"
+        ],
+        "draw_after": "upper_arm_far",
+        "allow_overhang": true
+      },
+      "lower_arm_far": {
+        "skip": false,
+        "visual_notes": "Same cream bandage wraps continuing down forearm and wrapping the hand (lower_* includes hand). Tight spiral wraps; small brown skin peek at wrist gap and knuckle strip. Aged linen color matching upper arm.",
+        "parent_parts": [
+          "lower_arm_far"
+        ],
+        "body_parts": [
+          "lower_arm_far",
+          "hand_far"
+        ],
+        "draw_after": "hand_far",
+        "allow_overhang": true
+      },
+      "upper_leg_far": {
+        "skip": false,
+        "visual_notes": "Cream bandage wraps covering thigh in horizontal/slightly diagonal strips; thin brown skin gaps between wraps. Dusty desert linen look.",
+        "parent_parts": [
+          "upper_leg_far"
+        ],
+        "body_parts": [
+          "upper_leg_far"
+        ],
+        "draw_after": "upper_leg_far",
+        "allow_overhang": true
+      },
+      "lower_leg_far": {
+        "skip": false,
+        "visual_notes": "Bandage wraps on shin and foot (foot included in lower_*). Wrap continues over foot like wrapped sandals; brown skin peek at ankle. Slight overhang at toe tip ok.",
+        "parent_parts": [
+          "lower_leg_far"
+        ],
+        "body_parts": [
+          "lower_leg_far",
+          "foot_far"
+        ],
+        "draw_after": "foot_far",
+        "allow_overhang": true
+      },
+      "torso": {
+        "skip": false,
+        "visual_notes": "Chest and abdomen fully wrapped in overlapping cream linen strips (horizontal + slight diagonal). Mid-torso darker frayed sash/belt in dusty brown (#8B6B4A) 2-3px tall across waist. Thin brown skin gaps between bandage layers on ribs. Neck area wraps continue up toward head. Loose strip end hanging slightly past lower torso edge ok.",
+        "parent_parts": [
+          "torso"
+        ],
+        "body_parts": [
+          "torso"
+        ],
+        "draw_after": "torso",
+        "allow_overhang": true
+      },
+      "head": {
+        "skip": false,
+        "visual_notes": "Head almost completely wrapped in cream bandage strips like a desert mummy hood \u2014 horizontal wraps across face and crown. Leave two small eye-slit openings; paint bright yellow (#F0D030 / #E8C020) iris/eye fill in those slits (override base white eyes). A thin brown skin strip may show on cheek/jaw between wraps. Optional short loose bandage end overhanging back of head. No helmet bulk \u2014 wraps hug the head silhouette with mild rear overhang.",
+        "parent_parts": [
+          "head"
+        ],
+        "body_parts": [
+          "head"
+        ],
+        "draw_after": "head",
+        "allow_overhang": true
+      },
+      "upper_leg_near": {
+        "skip": false,
+        "visual_notes": "Near thigh: cream bandage wraps like far side; thin brown skin gaps; strip edge lines in darker linen.",
+        "parent_parts": [
+          "upper_leg_near"
+        ],
+        "body_parts": [
+          "upper_leg_near"
+        ],
+        "draw_after": "upper_leg_near",
+        "allow_overhang": true
+      },
+      "lower_leg_near": {
+        "skip": false,
+        "visual_notes": "Near shin + foot wrapped in cream bandages; ankle skin peek; foot fully wrapped.",
+        "parent_parts": [
+          "lower_leg_near"
+        ],
+        "body_parts": [
+          "lower_leg_near",
+          "foot_near"
+        ],
+        "draw_after": "foot_near",
+        "allow_overhang": true
+      },
+      "upper_arm_near": {
+        "skip": false,
+        "visual_notes": "Near upper arm cream bandage wraps with brown skin gaps; match far arm palette.",
+        "parent_parts": [
+          "upper_arm_near"
+        ],
+        "body_parts": [
+          "upper_arm_near"
+        ],
+        "draw_after": "upper_arm_near",
+        "allow_overhang": true
+      },
+      "lower_arm_near": {
+        "skip": false,
+        "visual_notes": "Near forearm + hand wrapped in cream linen; knuckle/wrist brown skin peeks; aged strip edges.",
+        "parent_parts": [
+          "lower_arm_near"
+        ],
+        "body_parts": [
+          "lower_arm_near",
+          "hand_near"
+        ],
+        "draw_after": "hand_near",
+        "allow_overhang": true
+      }
+    }
+  },
+  "user_facing_summary": "Outfit plan for `desert_wanderer`\nBrief: Desert wanderer / mummy-like vagabond: entire body wrapped in aged linen bandages, warm brown/tan skin showing in gaps between wraps, glowing yellow eyes through face slits. Dusty desert survivor look, no armor or weapons \u2014 only cloth wraps, ragged belt sash, and wrapped feet.\n\nOverall look:\nSide-view desert vagabond fully wrapped in dusty cream linen bandages from head to toe. Warm brown skin peeks through thin gaps between wraps on arms, legs, and face. Face almost fully covered by horizontal bandage strips with two narrow eye slits revealing bright yellow eyes. Torso wrapped in overlapping diagonal and horizontal strips with a darker frayed sash/belt at the waist. Arms and legs tightly wrapped; hands and feet covered in bandage mitts/wraps with a few brown skin strips visible at knuckles and ankles. Silhouette stays close to the body with slight overhang from loose bandage ends at the head rear and waist sash.\n\nDesign layers (same 10 names as base/layers/):\n  - upper_arm_far: paint on [upper_arm_far] (pose parent=upper_arm_far) \u2014 Cream/aged linen (#E8D9B8) horizontal bandage wraps covering the upper arm silhouette; leave 1-2 thin diagonal gaps showing warm brown skin (#A analog 8B5A3C). Slight darker wrap edge lines (#C4B08A) for strip separation. No shading bake.\n  - lower_arm_far: paint on [lower_arm_far, hand_far] (pose parent=lower_arm_far) \u2014 Same cream bandage wraps continuing down forearm and wrapping the hand (lower_* includes hand). Tight spiral wraps; small brown skin peek at wrist gap and knuckle strip. Aged linen color matching upper arm.\n  - upper_leg_far: paint on [upper_leg_far] (pose parent=upper_leg_far) \u2014 Cream bandage wraps covering thigh in horizontal/slightly diagonal strips; thin brown skin gaps between wraps. Dusty desert linen look.\n  - lower_leg_far: paint on [lower_leg_far, foot_far] (pose parent=lower_leg_far) \u2014 Bandage wraps on shin and foot (foot included in lower_*). Wrap continues over foot like wrapped sandals; brown skin peek at ankle. Slight overhang at toe tip ok.\n  - torso: paint on [torso] (pose parent=torso) \u2014 Chest and abdomen fully wrapped in overlapping cream linen strips (horizontal + slight diagonal). Mid-torso darker frayed sash/belt in dusty brown (#8B6B4A) 2-3px tall across waist. Thin brown skin gaps between bandage layers on ribs. Neck area wraps continue up toward head. Loose strip end hanging slightly past lower torso edge ok.\n  - head: paint on [head] (pose parent=head) \u2014 Head almost completely wrapped in cream bandage strips like a desert mummy hood \u2014 horizontal wraps across face and crown. Leave two small eye-slit openings; paint bright yellow (#F0D030 / #E8C020) iris/eye fill in those slits (override base white eyes). A thin brown skin strip may show on cheek/jaw between wraps. Optional short loose bandage end overhanging back of head. No helmet bulk \u2014 wraps hug the head silhouette with mild rear overhang.\n  - upper_leg_near: paint on [upper_leg_near] (pose parent=upper_leg_near) \u2014 Near thigh: cream bandage wraps like far side; thin brown skin gaps; strip edge lines in darker linen.\n  - lower_leg_near: paint on [lower_leg_near, foot_near] (pose parent=lower_leg_near) \u2014 Near shin + foot wrapped in cream bandages; ankle skin peek; foot fully wrapped.\n  - upper_arm_near: paint on [upper_arm_near] (pose parent=upper_arm_near) \u2014 Near upper arm cream bandage wraps with brown skin gaps; match far arm palette.\n  - lower_arm_near: paint on [lower_arm_near, hand_near] (pose parent=lower_arm_near) \u2014 Near forearm + hand wrapped in cream linen; knuckle/wrist brown skin peeks; aged strip edges.\n\nPainting rule: for each active export layer, prepare_outfit_slot_reference then paint ONLY via MCP tools onto design/layers/<layer>.png (fill_parts_on_slot for that layer's body_parts silhouette; fill_rect / draw_line / paint_pixels for details). FORBIDDEN: Shell/PIL scripts or external image generators. Each design file rigid-rotates 1:1 with its body part (no multi-parent split). Clothing MAY overhang the body silhouette \u2014 body underlay is alignment reference, not a clip mask; keep proportions sensible. If this matches, say OK and paint layers; otherwise revise the plan.",
+  "slot_specs": [
+    {
+      "slot": "upper_arm_far",
+      "parent_parts": [
+        "upper_arm_far"
+      ],
+      "body_parts": [
+        "upper_arm_far"
+      ],
+      "draw_after": "upper_arm_far",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Far upper-arm design (sleeves / arm armor). Single parent: upper_arm_far. Skip if bare upper arm.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "lower_arm_far",
+      "parent_parts": [
+        "lower_arm_far"
+      ],
+      "body_parts": [
+        "lower_arm_far",
+        "hand_far"
+      ],
+      "draw_after": "hand_far",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Far lower-arm + hand design (sleeve cuff / gloves). Export layer includes hand_far. Single parent: lower_arm_far.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "upper_leg_far",
+      "parent_parts": [
+        "upper_leg_far"
+      ],
+      "body_parts": [
+        "upper_leg_far"
+      ],
+      "draw_after": "upper_leg_far",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Far upper-leg design (hakama / pants / thigh armor). Single parent: upper_leg_far.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "lower_leg_far",
+      "parent_parts": [
+        "lower_leg_far"
+      ],
+      "body_parts": [
+        "lower_leg_far",
+        "foot_far"
+      ],
+      "draw_after": "foot_far",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Far lower-leg + foot design (shin armor / boots). Export layer includes foot_far. Single parent: lower_leg_far.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "torso",
+      "parent_parts": [
+        "torso"
+      ],
+      "body_parts": [
+        "torso"
+      ],
+      "draw_after": "torso",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Torso design (do / shirt / chest armor). Single parent: torso. May be bulkier than torso silhouette.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "head",
+      "parent_parts": [
+        "head"
+      ],
+      "body_parts": [
+        "head"
+      ],
+      "draw_after": "head",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Head design (jingasa / helmet / hood). Single parent: head. May overhang head silhouette; keep scale sensible.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "upper_leg_near",
+      "parent_parts": [
+        "upper_leg_near"
+      ],
+      "body_parts": [
+        "upper_leg_near"
+      ],
+      "draw_after": "upper_leg_near",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Near upper-leg design (hakama / pants / thigh armor). Single parent: upper_leg_near.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "lower_leg_near",
+      "parent_parts": [
+        "lower_leg_near"
+      ],
+      "body_parts": [
+        "lower_leg_near",
+        "foot_near"
+      ],
+      "draw_after": "foot_near",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Near lower-leg + foot design (shin armor / boots). Export layer includes foot_near. Single parent: lower_leg_near.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "upper_arm_near",
+      "parent_parts": [
+        "upper_arm_near"
+      ],
+      "body_parts": [
+        "upper_arm_near"
+      ],
+      "draw_after": "upper_arm_near",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Near upper-arm design (sleeves / arm armor). Single parent: upper_arm_near. Skip if bare upper arm.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "lower_arm_near",
+      "parent_parts": [
+        "lower_arm_near"
+      ],
+      "body_parts": [
+        "lower_arm_near",
+        "hand_near"
+      ],
+      "draw_after": "hand_near",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Near lower-arm + hand design (sleeve cuff / gloves). Export layer includes hand_near. Single parent: lower_arm_near.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    }
+  ]
+}

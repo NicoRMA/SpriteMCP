@@ -5,8 +5,9 @@ These functions are the intended surface for the MCP server
 
 Agent character / outfit / animation pipeline
 ---------------------------------------------
-1. Optionally ``set_output_root(path)`` when assets should leave
-   ``<cwd>/output`` (session-wide). Per-call ``output_dir`` still overrides.
+1. **Required:** ``set_output_root(<agent_project>/output)`` once per session
+   (or ``SPRITE_GEN_OUTPUT_ROOT`` at process start, or pass ``output_dir`` on
+   every write). Writes refuse until a root is set — no implicit cwd default.
 2. ``generate_character(name)`` — base idle + pivots under
    ``<output_root>/characters/<name>/base/``
 3. ``plan_outfit(name, brief, plan)`` — agent authors the 10 export-layer
@@ -60,9 +61,12 @@ from . import pivots as _pivots
 from . import pixel_editor as _pixel_editor
 from . import shading as _shading
 from . import show_ref_grid as _show_ref_grid
+from . import vision_preview as _vision_preview
 from .config import (
     DEFAULT_STYLE_REF,
+    MISSING_OUTPUT_ROOT,
     clear_output_root as _clear_output_root,
+    default_output_dir,
     get_output_root as _get_output_root,
     has_session_output_root,
     resolve_output_dir,
@@ -86,42 +90,59 @@ from .base_idle import (
 def set_output_root(path: str | Path) -> dict[str, str]:
     """Set session output root for all tools that omit ``output_dir``.
 
-    Resolves to an absolute path, creates the directory if needed, and keeps
-    the override for this process / MCP session only (not written to disk).
-    Default when unset: ``<cwd>/output`` (agent workspace). Per-call
-    ``output_dir`` still wins. Use when the user wants character/anim assets
-    outside the process working directory.
+    **Required** before any write (unless every write passes ``output_dir``,
+    or ``SPRITE_GEN_OUTPUT_ROOT`` seeded the session). Resolves to an absolute
+    path, creates the directory if needed, and keeps the override for this
+    process / MCP session only (not written to disk). Per-call ``output_dir``
+    still wins. Pass the agent project's output folder, e.g.
+    ``<agent_project>/output``.
     """
     root = _set_output_root(path)
     return {
         "output_root": str(root),
-        "default_output_dir": str(_get_output_root()),
+        "default_output_dir": str(root),
         "session_override": True,
+        "ready_for_writes": True,
         "note": (
             "Session output root set. Subsequent generate_character / outfit / "
             "animation calls without output_dir write under this path. "
-            "Call clear_output_root() to restore the cwd/output default."
+            "Call clear_output_root() to clear; writes then refuse until set again."
         ),
     }
 
 
-def clear_output_root() -> dict[str, str]:
-    """Clear session output override; restore ``<cwd>/output`` default."""
-    root = _clear_output_root()
+def clear_output_root() -> dict[str, Any]:
+    """Clear session output root; writes refuse until ``set_output_root`` again."""
+    _clear_output_root()
     return {
-        "output_root": str(root),
-        "default_output_dir": str(_get_output_root()),
+        "output_root": None,
+        "default_output_dir": None,
         "session_override": False,
+        "ready_for_writes": False,
+        "note": (
+            "Session output root cleared. Call set_output_root(<agent_project>/"
+            "output) before any write."
+        ),
     }
 
 
 def get_output_root() -> dict[str, Any]:
-    """Absolute output root currently in effect (session or ``<cwd>/output``)."""
+    """Absolute session output root, or a not-ready status if unset."""
+    if not has_session_output_root():
+        return {
+            "output_root": None,
+            "default_output_dir": None,
+            "session_override": False,
+            "ready_for_writes": False,
+            "suggested_cli_default": str(default_output_dir().resolve()),
+            "error": MISSING_OUTPUT_ROOT,
+        }
     root = _get_output_root()
     return {
         "output_root": str(root),
-        "default_output_dir": str(_get_output_root()),
-        "session_override": has_session_output_root(),
+        "default_output_dir": str(root),
+        "session_override": True,
+        "ready_for_writes": True,
         "characters_dir": str(root / "characters"),
     }
 
@@ -161,19 +182,32 @@ def get_joints() -> list[dict[str, str]]:
     ]
 
 
-def get_default_paths() -> dict[str, str]:
-    """Return output paths in effect (session root or ``<cwd>/output``).
+def get_default_paths() -> dict[str, Any]:
+    """Return output paths when a session root is set; else not-ready status.
 
     Characters live under ``<output_root>/characters/<name>/{base,design,anims}``.
-    When the user wants assets outside the process working directory, call
-    ``set_output_root`` or pass ``output_dir`` on write tools.
+    Call ``set_output_root`` before writes (or pass ``output_dir`` on each call).
     """
+    if not has_session_output_root():
+        return {
+            "output_dir": None,
+            "output_root": None,
+            "default_output_dir": None,
+            "session_override": "false",
+            "ready_for_writes": False,
+            "suggested_cli_default": str(default_output_dir().resolve()),
+            "style_ref": str(DEFAULT_STYLE_REF),
+            "armature": ARMATURE_NAME,
+            "canvas": f"{CANVAS_W}x{CANVAS_H}",
+            "error": MISSING_OUTPUT_ROOT,
+        }
     root = _get_output_root()
     return {
         "output_dir": str(root),
         "output_root": str(root),
-        "default_output_dir": str(_get_output_root()),
-        "session_override": "true" if has_session_output_root() else "false",
+        "default_output_dir": str(root),
+        "session_override": "true",
+        "ready_for_writes": True,
         "style_ref": str(DEFAULT_STYLE_REF),
         "armature": ARMATURE_NAME,
         "canvas": f"{CANVAS_W}x{CANVAS_H}",
@@ -958,6 +992,34 @@ def compose_character(
     )
 
 
+def show_preview(
+    name: str,
+    *,
+    kind: str = "compose",
+    layer: str | None = None,
+    animation_name: str | None = None,
+    frame_index: int | None = None,
+    output_dir: Path | str | None = None,
+    scale: int = _vision_preview.VISION_PREVIEW_SCALE,
+) -> dict[str, Any]:
+    """Resolve an authored on-disk preview PNG and return vision metadata.
+
+    ``kind``: ``compose`` | ``layer`` | ``frame`` | ``contact_sheet``.
+    Loads existing pipeline outputs only (no invented pixels). The MCP tool
+    embeds a nearest-neighbor scaled PNG as ImageContent; this API returns
+    JSON paths/sizes only.
+    """
+    return _vision_preview.show_preview(
+        name,
+        kind=kind,
+        layer=layer,
+        animation_name=animation_name,
+        frame_index=frame_index,
+        output_dir=output_dir,
+        scale=scale,
+    )
+
+
 def open_pixel_editor(
     name: str,
     *,
@@ -1035,6 +1097,7 @@ __all__ = [
     "run_demo",
     "set_output_root",
     "set_pixels",
+    "show_preview",
     "show_reference_grid",
     "stroke_rect",
     "suggest_shade_regions",

@@ -75,6 +75,14 @@ Two-handed katana strike. Feet slightly apart and static. Hands locked in the sa
 
 <img src="demo/war_orc/design/compose_preview_scaled.png" alt="War orc rest pose" height="200" />
 
+### Desert wanderer
+
+**Initial prompt**
+
+> Crea un personaje vagabundo del desierto, con vendas en todo el cuerpo, color de piel moreno. Ojos amarillos.
+
+<img src="demo/desert_wanderer/design/compose_preview_scaled.png" alt="Desert wanderer rest pose" height="200" />
+
 ---
 
 ## How it works (high level)
@@ -191,7 +199,7 @@ uv run python -m spritemcp generate-character hero
 
 (With uvx: `uvx --from . -- python -m spritemcp paths`.)
 
-Outputs default to `<cwd>/output/` (the process working directory — usually the Cursor project). Optional `SPRITE_GEN_OUTPUT_ROOT` env or `set_output_root` redirects. Curated showcase characters live in `demo/` (tracked).
+Outputs require an explicit root: MCP/agents must call `set_output_root(<project>/output)` before writes (or `SPRITE_GEN_OUTPUT_ROOT` / per-call `output_dir`). Curated showcase characters live in `demo/` (tracked).
 
 ## MCP server (Cursor)
 
@@ -201,7 +209,7 @@ Generated files are written to output/ by default.
 
 ### Agent pipeline (do not skip gates)
 
-1. Ensure output root is the workspace (`cwd/output` or `set_output_root(<workspace>/output)`)
+1. **Required:** `set_output_root(<agent_project>/output)` before any write
 2. `generate_character(name)`
 3. `plan_outfit` → **show summary, wait for OK** → `prepare_outfit_slot_reference` → paint (`fill_parts_on_slot`, `fill_rect`, `paint_pixels`, …)
 4. Recommended: `plan_shading` → paint one-step-darker shadows → `compose_character`

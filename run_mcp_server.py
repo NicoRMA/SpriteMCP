@@ -1,13 +1,11 @@
 """Bulletproof Cursor MCP entrypoint for SpriteMCP.
 
 Forces ``src/`` onto ``sys.path`` so the editable package cannot be shadowed,
-then runs ``spritemcp.mcp_server:main``. Prefer this script from
-``.cursor/mcp.json`` over bare ``-m spritemcp.mcp_server``.
+then runs ``spritemcp.mcp_server:main``. Prefer this script from a local
+checkout ``.cursor/mcp.json`` while developing.
 
-On stderr: prints the loaded module path and registered tool count before
-serving. If Cursor Settings still show 28 tools after a restart, the client
-cached an old tools/list — bump ``spritemcp_CATALOG_EPOCH`` in mcp.json and
-clear the project MCP cache under ``%USERPROFILE%\\.cursor\\projects\\``.
+Published / GitHub users should use ``uvx --from git+… spritemcp``
+(see ``docs/mcp.example.json``), not this script.
 """
 
 from __future__ import annotations

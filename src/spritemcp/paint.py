@@ -224,10 +224,11 @@ def _finish_paint(
         },
         "layers_meta": meta["slots"].get(slot),
         "next_step": (
-            "Read preview_paths.reference (or reference_preview) to inspect. "
-            "Continue MCP paint tools on this slot, or prepare/paint other "
-            "slots, then compose_character. generate_outfit_slot is optional "
-            "(import / refresh only) — paint tools already write the layer."
+            "Do not Cursor-Read after every paint. Call show_preview "
+            "(kind=layer, layer=...) when you need visual QA, or continue "
+            "painting then compose_character (preview embeds a scaled PNG). "
+            "generate_outfit_slot is optional (import / refresh only) — "
+            "paint tools already write the layer."
         ),
         "forbidden_note": (
             "FORBIDDEN for outfit painting: Shell python/PIL scripts, "

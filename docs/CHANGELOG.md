@@ -2,17 +2,39 @@
 
 ## 2026-09-26
 
-### Default output root = process cwd
+### Output root required (no implicit cwd)
 
-- Default write root is always ``Path.cwd() / "output"`` (agent/MCP working
-  directory), never the package install / mini-project path from ``__file__``.
-- Optional ``SPRITE_GEN_OUTPUT_ROOT`` env at process start seeds the session
-  root (same effect as ``set_output_root``).
+- Write tools refuse unless ``set_output_root(<agent_project>/output)`` was
+  called, ``SPRITE_GEN_OUTPUT_ROOT`` seeded the session, or the call passes
+  ``output_dir``. No silent ``<cwd>/output`` fallback (avoids writing into the
+  wrong tree when the MCP process cwd is not the agent project).
+- ``get_output_root`` / ``get_default_paths`` report ``ready_for_writes``.
+- CLI still works: omitting ``--out-dir`` sets the session root to
+  ``<cwd>/output`` explicitly for that process.
+
+### Deterministic MCP image previews (ImageContent)
+
+- Compose / finish / export gates and new **`show_preview`** embed a
+  nearest-neighbor scaled PNG (default ×8) as MCP ``ImageContent`` via
+  FastMCP ``Image`` — agents see pixels without Cursor Read.
+- ``compose_character``, ``finish_frame_animation``, and
+  ``export_animation_preview`` default ``preview=True``; pass ``preview=False``
+  to skip embedding (disk writes unchanged). Paint tools still return paths
+  only (no per-stroke images).
+- ``show_preview(name, kind=compose|layer|frame|contact_sheet, ...)`` loads
+  existing authored outputs only. Native 90×128 remains source of truth on disk.
+- MCP catalog expected tool count **46** (was 45). Restart SpriteMCP after
+  pull/update so the client refreshes ``tools/list``. Published installs keep
+  using ``uvx --from git+… spritemcp`` (see ``docs/mcp.example.json``).
+
+### Default output root = process cwd (superseded)
+
+- Earlier: default write root was ``Path.cwd() / "output"``. **Superseded** by
+  "Output root required" above — agents must set the root explicitly.
+- Optional ``SPRITE_GEN_OUTPUT_ROOT`` env at process start still seeds the
+  session root (same effect as ``set_output_root``).
 - ``set_output_root`` / ``get_output_root`` / ``clear_output_root`` / per-call
-  ``output_dir`` unchanged. MCP instructions require confirming workspace
-  output before ``generate_character``.
-- Restart SpriteMCP after pull; bump ``SPRITEMCP_CATALOG_EPOCH`` if the
-  catalog stays stale.
+  ``output_dir`` unchanged in spirit; writes now refuse when unset.
 
 ## 2026-09-25
 

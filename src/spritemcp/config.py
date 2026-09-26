@@ -4,9 +4,10 @@ Defaults
 --------
 - **Authored armature:** ``<repo>/base/`` in a source checkout; otherwise the
   packaged ``spritemcp/authored_base/`` copy (uvx / pip / wheel).
-- **Output root:** always ``Path.cwd() / "output"`` when no session override
-  and no per-call ``output_dir``. That is the MCP/agent working directory
-  (usually the Cursor project), not the package install location.
+- **Output root:** there is **no** implicit write root. Agents/MCP must call
+  ``set_output_root(<agent_project>/output)`` (or set ``SPRITE_GEN_OUTPUT_ROOT``
+  at process start) before any write, **or** pass ``output_dir`` on the call.
+  Writes never target the package install path.
 - **Env seed:** if ``SPRITE_GEN_OUTPUT_ROOT`` is set when this module loads,
   it becomes the initial session output root (same as ``set_output_root``).
 
@@ -24,6 +25,14 @@ import os
 from pathlib import Path
 
 _PKG_DIR = Path(__file__).resolve().parent
+
+MISSING_OUTPUT_ROOT = (
+    "Output root is not set. Before any write, call "
+    "set_output_root(<agent_project>/output) once for this session, "
+    "or pass output_dir on the call. "
+    "Optional: set SPRITE_GEN_OUTPUT_ROOT when starting the MCP process. "
+    "Writes never use the package install path or an implicit process cwd."
+)
 
 
 def _detect_repo_root() -> Path | None:
@@ -71,10 +80,10 @@ def authored_base_dir() -> Path:
 
 
 def default_output_dir() -> Path:
-    """Default output root: ``<cwd>/output`` (agent/MCP working directory).
+    """Suggested project output folder: ``<cwd>/output``.
 
-    Never uses the package install path. When developing inside this repo with
-    cwd set to the checkout, that is ``<repo>/output``.
+    Not used as an implicit write target. CLI may call
+    ``set_output_root(default_output_dir())`` when the user omits ``--out-dir``.
     """
     return Path.cwd() / "output"
 
@@ -100,16 +109,16 @@ def _session_root_from_env() -> Path | None:
     return root
 
 
-# Process / MCP-session override (None → ``Path.cwd() / "output"``).
+# Process / MCP-session override (None → writes refuse until set).
 _session_output_root: Path | None = _session_root_from_env()
 
 
 def set_output_root(path: Path | str) -> Path:
     """Set the session output root; create it if needed; return absolute path.
 
-    Persists for this Python process (MCP server session). Does not change
-    the cwd-based default. Pass an absolute or relative path — relative
-    paths resolve against the current working directory.
+    Persists for this Python process (MCP server session). Pass an absolute
+    or relative path — relative paths resolve against the current working
+    directory.
     """
     global _session_output_root
     root = Path(path).expanduser().resolve()
@@ -118,18 +127,17 @@ def set_output_root(path: Path | str) -> Path:
     return root
 
 
-def clear_output_root() -> Path:
-    """Clear the session override; subsequent calls use ``<cwd>/output``."""
+def clear_output_root() -> None:
+    """Clear the session output root; writes refuse until set again."""
     global _session_output_root
     _session_output_root = None
-    return get_output_root()
 
 
 def get_output_root() -> Path:
-    """Absolute output root: session override if set, else ``<cwd>/output``."""
+    """Absolute session output root, or raise if not set."""
     if _session_output_root is not None:
         return _session_output_root
-    return default_output_dir().resolve()
+    raise ValueError(MISSING_OUTPUT_ROOT)
 
 
 def has_session_output_root() -> bool:
@@ -138,15 +146,17 @@ def has_session_output_root() -> bool:
 
 
 def resolve_output_dir(output_dir: Path | str | None = None) -> Path:
-    """Return absolute output directory.
+    """Return absolute output directory for a write.
 
     - ``output_dir`` provided → that path (resolved, not auto-created here)
-    - else → session ``set_output_root`` value if set
-    - else → ``Path.cwd() / "output"``
+    - else → session ``set_output_root`` / ``SPRITE_GEN_OUTPUT_ROOT`` if set
+    - else → ``ValueError`` (no implicit cwd default)
     """
-    if output_dir is None:
-        return get_output_root()
-    return Path(output_dir).expanduser().resolve()
+    if output_dir is not None:
+        return Path(output_dir).expanduser().resolve()
+    if _session_output_root is not None:
+        return _session_output_root
+    raise ValueError(MISSING_OUTPUT_ROOT)
 
 
 def resolve_style_ref(style_ref: Path | str | None = None) -> Path:

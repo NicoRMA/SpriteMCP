@@ -1,8 +1,11 @@
 """MCP server for SpriteMCP — stdio transport for Cursor agents.
 
-Wraps ``spritemcp.api`` as tools. Returns JSON-serializable dicts; image
-outputs include absolute/relative path strings under ``paths`` /
-``preview_paths``. Agents can inspect those PNGs with the Read tool.
+Wraps ``spritemcp.api`` as tools. Returns JSON-serializable dicts; compose /
+finish / ``show_preview`` / ``export_animation_preview`` also embed a
+nearest-neighbor scaled PNG as MCP ``ImageContent`` (FastMCP ``Image``) when
+``preview=True``. Paint tools return path strings only — do not embed on every
+stroke. Agents should use embedded images / ``show_preview`` for visual QA,
+not Cursor Read after every paint.
 
 This module's FastMCP ``instructions`` are the durable SOP for any agent —
 do not rely on a prior chat. Keep them concise and self-contained.
@@ -11,11 +14,13 @@ do not rely on a prior chat. Keep them concise and self-contained.
 from __future__ import annotations
 
 import sys
+from pathlib import Path
 from typing import Any
 
-from mcp.server.fastmcp import FastMCP
+from mcp.server.fastmcp import FastMCP, Image
 
 from . import api
+from .vision_preview import VISION_PREVIEW_SCALE, png_bytes_nearest_scaled
 
 # First-class outfit paint (agents must NOT fall back to Shell/PIL).
 # Cursor catalogs that show ~28 tools are STALE (pre-paint); restart MCP.
@@ -54,6 +59,7 @@ _REQUIRED_TOOL_NAMES: frozenset[str] = frozenset(
         "list_outfit_layers",
         "clear_outfit_slot",
         "compose_character",
+        "show_preview",
         "generate_character",
         "open_pixel_editor",
         "plan_animation",
@@ -65,40 +71,38 @@ _REQUIRED_TOOL_NAMES: frozenset[str] = frozenset(
     }
 )
 
-# Decorated @mcp.tool count in this module (outfit+anim+paint+shading). Cursor UI
-# showing fewer (e.g. 28) usually means Cursor reused a stale tools/list
-# lease and skipped ListToolsRequest after restart — bump
-# SPRITEMCP_CATALOG_EPOCH in .cursor/mcp.json and restart SpriteMCP.
-_EXPECTED_TOOL_COUNT = 45
+# Decorated @mcp.tool count in this module (outfit+anim+paint+shading+preview).
+# Cursor UI showing fewer (e.g. 28 or 45) usually means a stale MCP process or
+# Cursor reused an old tools/list lease — restart SpriteMCP (or reload window).
+_EXPECTED_TOOL_COUNT = 46
 
 # Durable cold-start SOP (English). Shown to every Cursor agent via MCP
 # server instructions — not conversation history.
 _MCP_INSTRUCTIONS = (
     "SpriteMCP (outfit+anim+shading). Use THESE MCP tools only — never "
     "Shell, never python -c, never import spritemcp.api as a substitute. "
-    "Expected live tool_count=45 including 11 paint tools "
+    "Expected live tool_count=46 including 11 paint tools "
     "(fill_parts_on_slot, paint_pixels, set_pixels, fill_rect, stroke_rect, "
     "draw_line, fill_ellipse, clear_rect, flood_fill, get_layer_pixels, "
-    "paint_from_commands) plus open_pixel_editor. If Cursor catalog shows "
-    "~28 tools or "
+    "paint_from_commands) plus open_pixel_editor and show_preview. If Cursor "
+    "catalog shows ~28 tools or "
     "plan_outfit / plan_shading / compose_character / paint_pixels / fill_rect / "
-    "fill_parts_on_slot are missing "
+    "fill_parts_on_slot / show_preview are missing "
     "from the tool list, stop and tell the user to restart SpriteMCP "
     "(catalog is stale).\n"
     "\n"
     "Pixel sprite toolkit (side view +X only). Any character name works; "
     "there are no hardcoded styles or character-specific code paths.\n"
     "\n"
-    "OUTPUT PATH: default writes under <process cwd>/output/ (the agent/MCP "
-    "working directory — usually the Cursor project), NOT the package install "
-    "folder. Optional SPRITE_GEN_OUTPUT_ROOT env at MCP start seeds the "
-    "session root. Call set_output_root(absolute_or_relative_path) once "
-    "(session-persisted; creates dirs) OR pass output_dir on each write tool "
-    "(generate_character, outfit, plan_animation, build/finish). If unsure "
-    "the active root is the workspace project, call set_output_root to "
-    "<workspace_absolute>/output before generate_character. "
-    "get_default_paths / get_output_root show the active root. Existing "
-    "characters under an old path stay valid if you keep that root.\n"
+    "OUTPUT PATH (REQUIRED before any write): there is NO implicit cwd "
+    "default and writes NEVER go to the package install folder. FIRST call "
+    "set_output_root(<agent_project_absolute>/output) once per session "
+    "(creates dirs; persists until clear_output_root or process exit), "
+    "OR pass output_dir on every write tool, OR set SPRITE_GEN_OUTPUT_ROOT "
+    "when starting the MCP process. get_output_root / get_default_paths "
+    "report ready_for_writes. If a write fails with 'Output root is not "
+    "set', call set_output_root and retry — do not guess a path inside "
+    "the spritemcp package.\n"
     "\n"
     "SHARED ARMATURE: every character copies the same naked base idle + "
     "pivots under characters/<name>/base/. Canvas is authored 90x128 "
@@ -111,13 +115,13 @@ _MCP_INSTRUCTIONS = (
     "\n"
     "DISK LAYOUT: <output_root>/characters/<name>/{base, design, anims/<anim>/}. "
     "design/ has plan.json, shading_plan.json (optional), layers/<layer>.png "
-    "(same 10 names as base/layers/), refs/<layer>_ref.png, compose_preview.png. "
+    "(same 10 names as base/layers/), refs/<layer>_ref.png, compose_preview.png "
+    "(native 90x128 source of truth) + compose_preview_scaled.png. "
     "anims/<anim>/ has plan.json + frame_00..07.\n"
     "\n"
     "MANDATORY PIPELINE (do not skip gates):\n"
-    "0) Ensure output root is the agent workspace project "
-    "(cwd/output, or set_output_root to <workspace>/output). If unsure, "
-    "set_output_root to the workspace absolute path + /output.\n"
+    "0) REQUIRED: set_output_root(<agent_project>/output) before any write "
+    "(or SPRITE_GEN_OUTPUT_ROOT / per-call output_dir). No exceptions.\n"
     "1) generate_character(name)\n"
     "2) plan_outfit(name, brief, plan) — agent authors the 10 export-layer "
     "notes from a free brief (e.g. samurai); conceptual words like jingasa/do/"
@@ -143,7 +147,8 @@ _MCP_INSTRUCTIONS = (
     "chin, armpits, folds, slightly darker far, under feet). Never rewrite "
     "base/; do not strip eyes.\n"
     "5) compose_character — dressed rest preview REQUIRED before animation "
-    "when design exists (re-compose after shading)\n"
+    "when design exists (re-compose after shading). Default preview=True "
+    "embeds a nearest-neighbor ×8 PNG in the tool result for vision QA.\n"
     "6) HUMAN EDIT GATE (required ask): after compose, ASK the user if they "
     "want to edit anything manually. If no → continue to plan_animation. "
     "If yes → open_pixel_editor(name) (opens local browser UI; pencil / "
@@ -153,9 +158,11 @@ _MCP_INSTRUCTIONS = (
     "7) plan_animation — SHOW user_facing_summary; wait for OK\n"
     "8) (build_frame_animation → finish_frame_animation) × 8 frames (0..7). "
     "Finishing frame 7 also writes <anim>_contact_sheet.png + <anim>_preview.gif "
-    "(re-run with export_animation_preview). Preview GIFs are ALWAYS native "
-    "90x128 (ANIMATION_PREVIEW_SCALE=1) — never pass a custom GIF scale; every "
-    "clip must match. "
+    "(re-run with export_animation_preview). finish_frame_animation / "
+    "export_animation_preview default preview=True and embed a scaled PNG "
+    "(finished frame, or contact sheet when complete). Preview GIFs are ALWAYS "
+    "native 90x128 (ANIMATION_PREVIEW_SCALE=1) — never pass a custom GIF scale; "
+    "every clip must match. "
     "Frames are DRESSED: each design layer rigid-rotates 1:1 with that body "
     "part (NO multi-parent far+near split). No design → base-only.\n"
     "\n"
@@ -176,8 +183,10 @@ _MCP_INSTRUCTIONS = (
     "layer (alignment/proportions only — NOT a clip mask). Clothing MAY "
     "overhang body silhouette if scale stays sensible. Persist paint only in "
     "design/layers/.\n"
-    "- After each paint op, Read preview_paths.reference (or "
-    "reference_preview) from the tool response.\n"
+    "- Do NOT Read after every paint op. Paint tools return path strings "
+    "only (no embedded image). For visual QA call show_preview(kind=layer) "
+    "or compose_character / show_preview(kind=compose) when you need to see "
+    "the result.\n"
     "- Do NOT use flood_fill of the entire body silhouette as the sole design.\n"
     "\n"
     "SHADING (recommended after flat outfit paint):\n"
@@ -195,7 +204,18 @@ _MCP_INSTRUCTIONS = (
     "anims/<anim>/plan.json. Never invent if-style code paths — brief + "
     "painted layers only.\n"
     "\n"
-    "PREVIEW: tool results include PNG path strings — Read those images. "
+    "PREVIEW / VISION QA (deterministic MCP images):\n"
+    "- compose_character, finish_frame_animation, export_animation_preview "
+    "default preview=True and return an embedded nearest-neighbor scaled PNG "
+    "(typically ×8) as MCP ImageContent plus JSON metadata. Pass "
+    "preview=False to skip embedding (disk writes unchanged).\n"
+    "- show_preview(name, kind=compose|layer|frame|contact_sheet, ...) loads "
+    "existing authored outputs and embeds a scaled PNG — use for on-demand "
+    "visual QA. Do not invent pixels.\n"
+    "- Prefer embedded MCP images for routine visual QA. Do NOT rely on "
+    "Cursor Read for every paint stroke or every frame.\n"
+    "- Native 90x128 PNGs on disk remain the source of truth; vision gets the "
+    "scaled PNG.\n"
     "Call list_registered_tools once if unsure the catalog includes outfit "
     "paint tools. After code changes to this MCP server, restart the "
     "SpriteMCP so tools/instructions refresh."
@@ -207,8 +227,16 @@ mcp = FastMCP(
 )
 
 _PREVIEW_NOTE = (
-    "Preview/final PNGs are on disk. Use the Cursor Read tool on path strings "
-    "under paths / preview_paths to inspect images."
+    "PNGs are on disk under paths / preview_paths. Paint tools do not embed "
+    "images — for visual QA call show_preview or compose_character "
+    "(preview=True embeds a scaled PNG as MCP ImageContent)."
+)
+
+_EMBEDDED_PREVIEW_NOTE = (
+    "A nearest-neighbor scaled PNG is embedded as MCP ImageContent in this "
+    "result. Prefer that image for visual QA — do not rely on Cursor Read. "
+    "Native resolution files remain on disk under paths / preview_paths. "
+    "Pass preview=False to skip embedding next time."
 )
 
 
@@ -218,15 +246,90 @@ def _with_preview_hint(result: dict[str, Any]) -> dict[str, Any]:
     return out
 
 
+def _embed_scaled_png(
+    result: dict[str, Any],
+    source_path: str | Path | None,
+    *,
+    preview: bool = True,
+    scale: int = VISION_PREVIEW_SCALE,
+) -> dict[str, Any] | list[Any]:
+    """Attach FastMCP Image (→ ImageContent) from a native on-disk PNG.
+
+    When ``preview`` is False or ``source_path`` is missing, returns the JSON
+    dict only (same as path-only tools).
+    """
+    out = _with_preview_hint(result)
+    if not preview:
+        out["_agent_note"] = (
+            "preview=False: no embedded image. Disk paths unchanged. "
+            "Call show_preview or re-run with preview=True for vision QA."
+        )
+        return out
+    if source_path is None:
+        return out
+    path = Path(source_path)
+    if not path.is_file():
+        out["_agent_note"] = (
+            f"Could not embed preview — file missing: {path}. "
+            "Disk metadata still returned."
+        )
+        return out
+
+    png_bytes = png_bytes_nearest_scaled(path, scale=scale)
+    out = dict(out)
+    out["vision_preview"] = {
+        "embedded": True,
+        "scale": scale,
+        "source_path": str(path),
+        "mime_type": "image/png",
+        "resampling": "nearest",
+    }
+    out["_agent_note"] = _EMBEDDED_PREVIEW_NOTE
+    # FastMCP converts list[dict|Image] → TextContent + ImageContent.
+    return [out, Image(data=png_bytes, format="png")]
+
+
+def _compose_source_path(result: dict[str, Any]) -> str | None:
+    paths = result.get("paths") or {}
+    preview_paths = result.get("preview_paths") or {}
+    return (
+        paths.get("compose_preview")
+        or preview_paths.get("compose")
+        or None
+    )
+
+
+def _finish_source_path(result: dict[str, Any]) -> str | None:
+    """Prefer contact sheet when animation completes; else the finished frame."""
+    paths = result.get("paths") or {}
+    preview_paths = result.get("preview_paths") or {}
+    return (
+        paths.get("contact_sheet")
+        or preview_paths.get("contact_sheet")
+        or paths.get("frame_png")
+        or preview_paths.get("frame")
+        or None
+    )
+
+
+def _export_source_path(result: dict[str, Any]) -> str | None:
+    paths = result.get("paths") or {}
+    preview_paths = result.get("preview_paths") or {}
+    return (
+        paths.get("contact_sheet")
+        or preview_paths.get("contact_sheet")
+        or None
+    )
+
 @mcp.tool()
 def list_registered_tools() -> dict[str, Any]:
     """Return every tool name registered on this live MCP process.
 
-    Cold-start check: expected_tool_count=45 and must include plan_outfit,
-    plan_shading, compose_character, open_pixel_editor, fill_parts_on_slot,
-    paint_pixels, fill_rect, set_output_root, etc. If Cursor shows ~28 tools
-    or paint_* are missing from the agent catalog, restart SpriteMCP — do
-    not fall back to Shell/API/GenerateImage.
+    Cold-start check: expected_tool_count=46 and must include plan_outfit,
+    plan_shading, compose_character, show_preview, open_pixel_editor,
+    fill_parts_on_slot, paint_pixels, fill_rect, set_output_root, etc. If
+    Cursor shows ~28 tools or paint_* are missing from the agent catalog,
+    restart SpriteMCP — do not fall back to Shell/API/GenerateImage.
     """
     names = sorted(_tool_manager_names())
     name_set = set(names)
@@ -246,13 +349,16 @@ def list_registered_tools() -> dict[str, Any]:
         "missing_paint": missing_paint,
         "catalog_ok": paint_ok and count_ok and not missing,
         "_agent_note": (
-            "Live process has tool_count=45 with paint+shading+open_pixel_editor. "
-            "If Cursor "
-            "Settings / agent catalog still shows ~28 tools, Cursor skipped "
-            "tools/list after reconnect (stale lease). Fix: Settings → MCP → "
-            "restart SpriteMCP AFTER bumping SPRITEMCP_CATALOG_EPOCH in "
-            ".cursor/mcp.json; if still stale, delete the project mcps cache "
-            "folder then reload the window."
+            (
+                "Live process has tool_count=46 with paint+shading+"
+                "open_pixel_editor+show_preview. Check module_file: if it is "
+                "under AppData/Local/uv/cache and you expected local src/, "
+                "Cursor is on a stale uvx install — restart SpriteMCP or use "
+                "run_mcp_server.py from a checkout while developing. Published "
+                "users: uvx --from git+… spritemcp (docs/mcp.example.json). "
+                "If module_file is correct but the agent catalog still shows "
+                "~28/45 tools, restart SpriteMCP or reload the window."
+            )
             if paint_ok and count_ok
             else "Paint/required tools missing in this process — wrong "
             "entrypoint or failed registration; fix mcp.json / restart."
@@ -295,39 +401,38 @@ def get_view_lock() -> dict[str, Any]:
 
 
 @mcp.tool()
-def get_default_paths() -> dict[str, str]:
-    """Active output root, style ref, and common subdirs.
+def get_default_paths() -> dict[str, Any]:
+    """Active output root and common subdirs when ready_for_writes.
 
-    Default is <cwd>/output/ (agent/MCP working directory). Optional
-    SPRITE_GEN_OUTPUT_ROOT env seeds the session at start. Call
-    set_output_root(path) or pass output_dir on write tools to redirect.
-    Characters live under <output_root>/characters/<name>/{base,design,anims}.
+    Writes refuse until set_output_root (or SPRITE_GEN_OUTPUT_ROOT / per-call
+    output_dir). Characters live under
+    <output_root>/characters/<name>/{base,design,anims}.
     """
     return api.get_default_paths()
 
 
 @mcp.tool()
 def set_output_root(path: str) -> dict[str, str]:
-    """Set where character/outfit/anim output is written for this MCP session.
+    """REQUIRED before any write: set the agent project's output folder.
 
     Resolves to an absolute path and creates the directory. Persists until the
     MCP process exits or clear_output_root(). Does NOT move existing files —
     only redirects new writes. Per-call output_dir still overrides.
-    Example: set_output_root("C:/Users/me/game/assets/art/sprites").
-    When unset, tools use <cwd>/output/.
+    Example: set_output_root("C:/Users/me/my_game/output").
+    Without this (or SPRITE_GEN_OUTPUT_ROOT / output_dir), write tools error.
     """
     return api.set_output_root(path)
 
 
 @mcp.tool()
 def get_output_root() -> dict[str, Any]:
-    """Return the absolute output root currently in effect (session or default)."""
+    """Return the session output root, or ready_for_writes=false if unset."""
     return api.get_output_root()
 
 
 @mcp.tool()
-def clear_output_root() -> dict[str, str]:
-    """Clear session output override; restore <cwd>/output default."""
+def clear_output_root() -> dict[str, Any]:
+    """Clear session output root; writes refuse until set_output_root again."""
     return api.clear_output_root()
 
 
@@ -418,8 +523,9 @@ def generate_character(
     All characters share the same authored 90x128 base idle + pivots; do not
     invent a per-style skeleton. Writes
     <output_root>/characters/<name>/base/ (part map, layers, silhouette,
-    pivots, previews). Optional output_dir overrides the session root from
-    set_output_root. Call once before plan_outfit / animation.
+    pivots, previews). Requires set_output_root (or SPRITE_GEN_OUTPUT_ROOT /
+    output_dir). Optional output_dir overrides the session root. Call once
+    before plan_outfit / animation.
     """
     return _with_preview_hint(
         api.generate_character(name, output_dir=output_dir, scale=scale)
@@ -972,28 +1078,79 @@ def compose_character(
     output_dir: str | None = None,
     scale: int = 8,
     include_skipped: bool = False,
-) -> dict[str, Any]:
+    preview: bool = True,
+) -> dict[str, Any] | list[Any]:
     """Compose dressed rest = base body + design layers (required before anim).
 
-    Writes design/compose_preview.png. Uses DRAW_ORDER for body; each design
-    export layer is inserted full after draw_after (no clip-to-body — overhang
-    OK). GATE: call after painting layers (and preferably after plan_shading +
-    shadow paint), BEFORE plan_animation. Soft gate: does not refuse when no
-    shading plan exists. When design exists, build_frame_animation refuses
-    without this compose preview — animation frames then rigid-rotate each
-    design PNG 1:1 with its body part.
+    Writes design/compose_preview.png (native) + compose_preview_scaled.png.
+    Uses DRAW_ORDER for body; each design export layer is inserted full after
+    draw_after (no clip-to-body — overhang OK). GATE: call after painting
+    layers (and preferably after plan_shading + shadow paint), BEFORE
+    plan_animation. Soft gate: does not refuse when no shading plan exists.
+    When design exists, build_frame_animation refuses without this compose
+    preview — animation frames then rigid-rotate each design PNG 1:1 with
+    its body part.
+
+    Default preview=True embeds a nearest-neighbor scaled PNG (same scale)
+    as MCP ImageContent for vision QA. Pass preview=False to skip embedding
+    (disk writes unchanged).
 
     After this returns: HUMAN EDIT GATE — ask the user if they want manual
     pixel edits. If yes → open_pixel_editor → Apply → re-compose. If no →
     plan_animation.
     """
-    return _with_preview_hint(
-        api.compose_character(
-            name,
-            output_dir=output_dir,
-            scale=scale,
-            include_skipped=include_skipped,
-        )
+    result = api.compose_character(
+        name,
+        output_dir=output_dir,
+        scale=scale,
+        include_skipped=include_skipped,
+    )
+    return _embed_scaled_png(
+        result,
+        _compose_source_path(result),
+        preview=preview,
+        scale=scale,
+    )
+
+
+@mcp.tool()
+def show_preview(
+    name: str,
+    kind: str = "compose",
+    layer: str | None = None,
+    animation_name: str | None = None,
+    frame_index: int | None = None,
+    output_dir: str | None = None,
+    scale: int = VISION_PREVIEW_SCALE,
+    preview: bool = True,
+) -> dict[str, Any] | list[Any]:
+    """Embed a nearest-neighbor scaled PNG from existing authored outputs.
+
+    kind: compose | layer | frame | contact_sheet.
+    - compose: design/compose_preview.png (call compose_character first)
+    - layer: design/layers/<layer>.png (requires layer=)
+    - frame: anims/<animation>/frame_XX.png or draft (requires animation_name,
+      frame_index)
+    - contact_sheet: <animation>_contact_sheet.png (requires animation_name)
+
+    Does not invent pixels — loads pipeline outputs only. Default preview=True
+    returns JSON metadata + MCP ImageContent. Prefer this (or compose/finish
+    with preview=True) for visual QA instead of Cursor Read after every paint.
+    """
+    result = api.show_preview(
+        name,
+        kind=kind,
+        layer=layer,
+        animation_name=animation_name,
+        frame_index=frame_index,
+        output_dir=output_dir,
+        scale=scale,
+    )
+    return _embed_scaled_png(
+        result,
+        result.get("source_path"),
+        preview=preview,
+        scale=scale,
     )
 
 
@@ -1127,7 +1284,9 @@ def finish_frame_animation(
     frame_index: int,
     plan_id: str | None = None,
     output_dir: str | None = None,
-) -> dict[str, Any]:
+    preview: bool = True,
+    scale: int = VISION_PREVIEW_SCALE,
+) -> dict[str, Any] | list[Any]:
     """Lock the current draft frame as final under anims/<animation_name>/.
 
     GATE: refuses without a valid plan.json (same as build_frame_animation).
@@ -1137,15 +1296,23 @@ def finish_frame_animation(
     Writes frame_XX.png + poses/frame_XX.json. When frame 7 finishes (all
     frames present), also writes <animation_name>_contact_sheet.png and
     <animation_name>_preview.gif. Repeat build→finish for frames 0..7.
+
+    Default preview=True embeds a nearest-neighbor scaled PNG (finished frame,
+    or contact sheet when the animation completes) as MCP ImageContent.
+    Pass preview=False to skip embedding.
     """
-    return _with_preview_hint(
-        api.finish_frame_animation(
-            name,
-            animation_name,
-            frame_index,
-            plan_id=plan_id,
-            output_dir=output_dir,
-        )
+    result = api.finish_frame_animation(
+        name,
+        animation_name,
+        frame_index,
+        plan_id=plan_id,
+        output_dir=output_dir,
+    )
+    return _embed_scaled_png(
+        result,
+        _finish_source_path(result),
+        preview=preview,
+        scale=scale,
     )
 
 
@@ -1155,22 +1322,32 @@ def export_animation_preview(
     animation_name: str,
     duration_ms: int = 100,
     output_dir: str | None = None,
-) -> dict[str, Any]:
+    preview: bool = True,
+    scale: int = VISION_PREVIEW_SCALE,
+) -> dict[str, Any] | list[Any]:
     """Rebuild horizontal contact sheet + looping preview GIF for an animation.
 
     Requires finished frame_00.png … frame_07.png. Writes
     <animation_name>_contact_sheet.png and <animation_name>_preview.gif under
     anims/<animation_name>/. Preview GIF scale is LOCKED to native 90×128 —
-    do not ask for or invent a per-clip scale. Also runs automatically when
+    do not ask for or invent a per-clip GIF scale. Also runs automatically when
     finish_frame_animation locks frame 7.
+
+    Default preview=True embeds a nearest-neighbor scaled contact-sheet PNG
+    (vision scale, default ×8 — separate from GIF scale) as MCP ImageContent.
+    Pass preview=False to skip embedding.
     """
-    return _with_preview_hint(
-        api.export_animation_preview(
-            name,
-            animation_name,
-            duration_ms=duration_ms,
-            output_dir=output_dir,
-        )
+    result = api.export_animation_preview(
+        name,
+        animation_name,
+        duration_ms=duration_ms,
+        output_dir=output_dir,
+    )
+    return _embed_scaled_png(
+        result,
+        _export_source_path(result),
+        preview=preview,
+        scale=scale,
     )
 
 
@@ -1210,7 +1387,8 @@ def _install_list_tools_logging() -> None:
     """Log every tools/list response; Cursor sometimes skips re-list on restart.
 
     Re-registers the low-level handler so stderr shows the exact tool set the
-    client receives (must be 45 including paint_* + shading + open_pixel_editor).
+    client receives (must be 46 including paint_* + shading + open_pixel_editor
+    + show_preview).
     """
     from mcp import types as mcp_types
 
@@ -1246,8 +1424,7 @@ async def _run_stdio_with_list_changed() -> None:
         notification_options=NotificationOptions(tools_changed=True),
     )
     print(
-        "SpriteMCP: capabilities.tools.listChanged=True "
-        f"catalog_epoch={__import__('os').environ.get('SPRITEMCP_CATALOG_EPOCH', '')!r}",
+        "SpriteMCP: capabilities.tools.listChanged=True",
         file=sys.stderr,
         flush=True,
     )

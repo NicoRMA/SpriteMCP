@@ -29,7 +29,7 @@ from typing import Mapping
 
 from PIL import Image, ImageDraw, ImageFont
 
-from .config import MINI_PROJECT_ROOT, authored_base_dir, subdir
+from .config import MINI_PROJECT_ROOT, authored_base_dir, default_output_dir, subdir
 from .export import grid_to_image, save_grid
 from .palette import NEAR_BLACK, OFF_WHITE, SHADOW_BEIGE, TRANSPARENT, Color
 from .show_ref_grid import render_ref_grid
@@ -47,7 +47,8 @@ ARMATURE_NAME = "standard_90x128"
 AUTHORED_BASE_SOURCE_DIR = authored_base_dir()
 EYES_DETAIL_RGBA: Color = (255, 255, 255, 255)
 
-DEFAULT_OUT_DIR = subdir("base_idle_90x128")
+# CLI argparse suggestion only — real writes use resolve_output_dir / session root.
+DEFAULT_OUT_DIR = default_output_dir() / "base_idle_90x128"
 
 # Knee columns on the authored silhouette (shin widths at the knee band).
 # Far shin x=47..52 (w=6); near shin x=36..41 (w=6).

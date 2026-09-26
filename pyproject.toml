@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "spritemcp"
-version = "0.2.1"
+version = "0.2.2"
 description = "SpriteMCP — agent-driven pixel sprite toolkit with MCP tools for Cursor"
 readme = "README.md"
 license = { text = "MIT" }

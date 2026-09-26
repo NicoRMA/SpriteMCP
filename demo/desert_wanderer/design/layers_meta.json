@@ -1,0 +1,168 @@
+{
+  "schema": "spritemcp.outfit_layers_meta.v2",
+  "export_layers": [
+    "upper_arm_far",
+    "lower_arm_far",
+    "upper_leg_far",
+    "lower_leg_far",
+    "torso",
+    "head",
+    "upper_leg_near",
+    "lower_leg_near",
+    "upper_arm_near",
+    "lower_arm_near"
+  ],
+  "draw_order_body": [
+    "upper_arm_far",
+    "lower_arm_far",
+    "hand_far",
+    "upper_leg_far",
+    "lower_leg_far",
+    "foot_far",
+    "torso",
+    "head",
+    "upper_leg_near",
+    "lower_leg_near",
+    "foot_near",
+    "upper_arm_near",
+    "lower_arm_near",
+    "hand_near"
+  ],
+  "compose_note": "At rest compose: for each body part in draw_order_body, paint the body layer, then after draw_after insert the matching design export layer (overhang allowed \u2014 body is not a clip mask). Each design PNG rigid-rotates 1:1 with its single parent_parts entry (same name as base/layers/). Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible.",
+  "slots": {
+    "upper_arm_far": {
+      "parent_parts": [
+        "upper_arm_far"
+      ],
+      "body_parts": [
+        "upper_arm_far"
+      ],
+      "draw_after": "upper_arm_far",
+      "allow_overhang": true,
+      "optional": true,
+      "status": "painted",
+      "layer_file": "layers/upper_arm_far.png"
+    },
+    "lower_arm_far": {
+      "parent_parts": [
+        "lower_arm_far"
+      ],
+      "body_parts": [
+        "lower_arm_far",
+        "hand_far"
+      ],
+      "draw_after": "hand_far",
+      "allow_overhang": true,
+      "optional": true,
+      "status": "painted",
+      "layer_file": "layers/lower_arm_far.png"
+    },
+    "upper_leg_far": {
+      "parent_parts": [
+        "upper_leg_far"
+      ],
+      "body_parts": [
+        "upper_leg_far"
+      ],
+      "draw_after": "upper_leg_far",
+      "allow_overhang": true,
+      "optional": true,
+      "status": "painted",
+      "layer_file": "layers/upper_leg_far.png"
+    },
+    "lower_leg_far": {
+      "parent_parts": [
+        "lower_leg_far"
+      ],
+      "body_parts": [
+        "lower_leg_far",
+        "foot_far"
+      ],
+      "draw_after": "foot_far",
+      "allow_overhang": true,
+      "optional": true,
+      "status": "painted",
+      "layer_file": "layers/lower_leg_far.png"
+    },
+    "torso": {
+      "parent_parts": [
+        "torso"
+      ],
+      "body_parts": [
+        "torso"
+      ],
+      "draw_after": "torso",
+      "allow_overhang": true,
+      "optional": true,
+      "status": "painted",
+      "layer_file": "layers/torso.png"
+    },
+    "head": {
+      "parent_parts": [
+        "head"
+      ],
+      "body_parts": [
+        "head"
+      ],
+      "draw_after": "head",
+      "allow_overhang": true,
+      "optional": true,
+      "status": "painted",
+      "layer_file": "layers/head.png"
+    },
+    "upper_leg_near": {
+      "parent_parts": [
+        "upper_leg_near"
+      ],
+      "body_parts": [
+        "upper_leg_near"
+      ],
+      "draw_after": "upper_leg_near",
+      "allow_overhang": true,
+      "optional": true,
+      "status": "painted",
+      "layer_file": "layers/upper_leg_near.png"
+    },
+    "lower_leg_near": {
+      "parent_parts": [
+        "lower_leg_near"
+      ],
+      "body_parts": [
+        "lower_leg_near",
+        "foot_near"
+      ],
+      "draw_after": "foot_near",
+      "allow_overhang": true,
+      "optional": true,
+      "status": "painted",
+      "layer_file": "layers/lower_leg_near.png"
+    },
+    "upper_arm_near": {
+      "parent_parts": [
+        "upper_arm_near"
+      ],
+      "body_parts": [
+        "upper_arm_near"
+      ],
+      "draw_after": "upper_arm_near",
+      "allow_overhang": true,
+      "optional": true,
+      "status": "painted",
+      "layer_file": "layers/upper_arm_near.png"
+    },
+    "lower_arm_near": {
+      "parent_parts": [
+        "lower_arm_near"
+      ],
+      "body_parts": [
+        "lower_arm_near",
+        "hand_near"
+      ],
+      "draw_after": "hand_near",
+      "allow_overhang": true,
+      "optional": true,
+      "status": "painted",
+      "layer_file": "layers/lower_arm_near.png"
+    }
+  }
+}

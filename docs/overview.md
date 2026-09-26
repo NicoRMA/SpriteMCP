@@ -14,9 +14,9 @@ Details: [`side_view.md`](side_view.md). Recent changes: [`CHANGELOG.md`](CHANGE
 
 - **Canvas / armature:** authored **90×128** from repo `base/` (checkout) or packaged `spritemcp/authored_base/` (uvx/wheel) → `output/base_idle_90x128/`
 - **Eyes:** `eyes.png` is required face detail on the head (not a part id). Import always composites it onto `layers/head.png`, compose, silhouette, and posed frames; outfit design on `head` may cover eyes (helmets), but naked base never drops them.
-- **Output:** ``<cwd>/output/`` (agent/MCP working directory — usually the Cursor project). Not the package install folder. Optional ``SPRITE_GEN_OUTPUT_ROOT`` env seeds the session at MCP start. Curated public examples live in `demo/` (see root README).
+- **Output:** **no implicit default.** Agents must call ``set_output_root(<agent_project>/output)`` before any write (or set ``SPRITE_GEN_OUTPUT_ROOT`` at MCP start, or pass ``output_dir`` per call). Writes never use the package install path. Curated public examples live in `demo/` (see root README).
 - **Keep in sync:** when editing armature PNGs under `base/`, copy them into `src/spritemcp/authored_base/` before a release so `uvx` picks up the same masks.
-- **Session override:** `set_output_root(path)` (MCP/API) redirects all tools that omit `output_dir` for the process lifetime; creates dirs; absolute paths. Per-call `output_dir` still wins.
+- **Session root:** `set_output_root(path)` (MCP/API) is required for writes that omit `output_dir`; creates dirs; absolute paths. Per-call `output_dir` still wins. `clear_output_root` clears the session (writes refuse until set again).
 - **Style ref (optional):** if you keep a reference PNG for `show_reference_grid`, pass `--ref` / `style_ref=...`. The package default may point at a sibling game-repo path that does not exist in a standalone clone — override when needed.
 - **Characters:** `<output_root>/characters/<name>/`
 
@@ -24,7 +24,7 @@ Details: [`side_view.md`](side_view.md). Recent changes: [`CHANGELOG.md`](CHANGE
 
 **Mandatory flow** (do not skip plan steps):
 
-1. Ensure **output root** is the agent workspace (`cwd/output`, or **`set_output_root(<workspace>/output)`** if unsure)
+1. **Required:** **`set_output_root(<agent_project>/output)`** before any write (or env / per-call `output_dir`)
 2. **`generate_character(name)`** — rest idle + pivots under `characters/<name>/base/`
 3. **`plan_outfit(name, brief, plan)`** — agent authors slots from a free brief; writes `design/plan.json` + **`user_facing_summary`**
 4. **Show outfit summary** → per export layer: **`prepare_outfit_slot_reference`** → paint `design/layers/<layer>.png` (flat local colors; no shading bake in `fill_parts_on_slot`)
@@ -49,4 +49,6 @@ CLI: `python -m spritemcp pixel-editor <name> [--out-dir PATH]`.
 
 `src/spritemcp/api.py` is the stable public surface. `mcp_server.py` wraps those functions as stdio MCP tools. Example Cursor config: [`mcp.example.json`](mcp.example.json).
 
-Expected live tool count: **45** (including paint tools + `open_pixel_editor`). After server code changes, restart the MCP so the client catalog refreshes.
+Expected live tool count: **46** (including paint tools, `open_pixel_editor`, and `show_preview`). After server code changes, restart the MCP so the client catalog refreshes.
+
+**Vision QA:** `compose_character`, `finish_frame_animation`, and `export_animation_preview` default `preview=True` and embed a nearest-neighbor scaled PNG (typically ×8) as MCP ImageContent. Use `show_preview(kind=compose|layer|frame|contact_sheet)` for on-demand checks. Paint tools return path strings only — do not Cursor-Read after every stroke.

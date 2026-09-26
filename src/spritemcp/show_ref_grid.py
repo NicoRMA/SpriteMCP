@@ -14,10 +14,10 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
-from .config import DEFAULT_STYLE_REF, subdir
+from .config import DEFAULT_STYLE_REF, default_output_dir
 
 DEFAULT_REF = DEFAULT_STYLE_REF
-DEFAULT_OUT_DIR = subdir("reference_grid")
+DEFAULT_OUT_DIR = default_output_dir() / "reference_grid"
 
 # Background of the style ref (neutral grey) — used only to find content bbox.
 _BG_TOLERANCE = 18

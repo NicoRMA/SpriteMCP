@@ -1,0 +1,10 @@
+{
+  "armature": "standard_90x128",
+  "source_dir": "C:\\Users\\nicol\\Documents\\sprite_gen\\base",
+  "canvas": {
+    "w": 90,
+    "h": 128
+  },
+  "eyes_pixels": 8,
+  "note": "Geometry imported from user-authored base/ PNGs; eyes.png is required and always composited onto the head (visual detail, not a skeleton part id)."
+}

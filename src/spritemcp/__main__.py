@@ -19,6 +19,21 @@ def _parse_rotations(raw: str | None) -> dict[str, float] | None:
     return {str(k): float(v) for k, v in data.items()}
 
 
+def _ensure_cli_output_root(out_dir: str | None = None) -> None:
+    """CLI writes need an explicit session root (no silent package path)."""
+    from .config import (
+        default_output_dir,
+        has_session_output_root,
+        set_output_root,
+    )
+
+    if out_dir is not None:
+        set_output_root(out_dir)
+        return
+    if not has_session_output_root():
+        set_output_root(default_output_dir())
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="spritemcp",
@@ -135,22 +150,27 @@ def main(argv: list[str] | None = None) -> int:
     if command == "demo":
         from .demo import main as demo_main
 
+        _ensure_cli_output_root()
         return demo_main()
     if command == "show-ref-grid":
         from .show_ref_grid import main as show_main
 
+        _ensure_cli_output_root()
         return show_main(rest)
     if command == "base-idle":
         from .base_idle import main as idle_main
 
+        _ensure_cli_output_root()
         return idle_main(rest)
     if command == "pivots":
         from .pivots import main as pivots_main
 
+        _ensure_cli_output_root()
         return pivots_main(rest)
     if command == "paths":
         from .api import get_default_paths
 
+        _ensure_cli_output_root()
         for key, value in get_default_paths().items():
             print(f"{key}: {value}")
         return 0
@@ -178,9 +198,10 @@ def main(argv: list[str] | None = None) -> int:
     if command == "generate-character":
         from .api import generate_character
 
+        _ensure_cli_output_root(args.out_dir)
         result = generate_character(
             args.name,
-            output_dir=args.out_dir,
+            output_dir=None,
             scale=args.scale,
         )
         print(json.dumps(result, indent=2))
@@ -188,6 +209,7 @@ def main(argv: list[str] | None = None) -> int:
     if command == "plan-animation":
         from .api import plan_animation
 
+        _ensure_cli_output_root(args.out_dir)
         plan_data = json.loads(args.plan)
         contrast = None
         if args.contrast_with:
@@ -198,30 +220,32 @@ def main(argv: list[str] | None = None) -> int:
             args.intent,
             plan_data,
             contrast_with=contrast,
-            output_dir=args.out_dir,
+            output_dir=None,
         )
         print(json.dumps(result, indent=2))
         return 0
     if command == "get-animation-plan":
         from .api import get_animation_plan
 
+        _ensure_cli_output_root(args.out_dir)
         result = get_animation_plan(
             args.name,
             args.animation_name,
-            output_dir=args.out_dir,
+            output_dir=None,
         )
         print(json.dumps(result, indent=2))
         return 0
     if command == "build-frame":
         from .api import build_frame_animation
 
+        _ensure_cli_output_root(args.out_dir)
         result = build_frame_animation(
             args.name,
             args.animation_name,
             args.frame_index,
             _parse_rotations(args.rotations),
             plan_id=args.plan_id,
-            output_dir=args.out_dir,
+            output_dir=None,
             scale=args.scale,
         )
         print(json.dumps(result, indent=2))
@@ -229,21 +253,23 @@ def main(argv: list[str] | None = None) -> int:
     if command == "finish-frame":
         from .api import finish_frame_animation
 
+        _ensure_cli_output_root(args.out_dir)
         result = finish_frame_animation(
             args.name,
             args.animation_name,
             args.frame_index,
             plan_id=args.plan_id,
-            output_dir=args.out_dir,
+            output_dir=None,
         )
         print(json.dumps(result, indent=2))
         return 0
     if command == "pixel-editor":
         from .api import open_pixel_editor
 
+        _ensure_cli_output_root(args.out_dir)
         result = open_pixel_editor(
             args.name,
-            output_dir=args.out_dir,
+            output_dir=None,
             port=args.port,
             open_browser=not args.no_browser,
         )
