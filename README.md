@@ -101,24 +101,6 @@ build + finish × 8         joint angles → frame_00..07 + GIF / contact sheet
 
 The same joint hierarchy is used for all characters. Clothing follows the body part it belongs to.
 
-**View and drawing rules**
-
-Characters are always viewed from the side, facing +X.
-
-_far limbs are drawn behind the torso.
-
-_near limbs are drawn in front (near legs, then near arms so the arm stays over the thigh).
-
-Character-specific geometry belongs under design/; the shared base is not modified for individual characters.
-
-Animation angles are absolute degrees from the rest pose.
-
-For the +X view, a negative hip angle moves the leg forward; a positive knee angle flexes the leg.
-
-More detail:
-Architecture
-Side-view conventions
-
 **Manual pixel editor**
 
 ![Manual pixel editor](demo/manual_editor.png)
