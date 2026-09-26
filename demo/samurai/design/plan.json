@@ -1,0 +1,283 @@
+{
+  "schema": "spritemcp.outfit_plan.v2",
+  "plan_id": "samurai-outfit-84d51d2437eb-53149a0f",
+  "name": "samurai",
+  "brief": "Samurai warrior with jingasa. Sepia palette: yellow clothing, light skin, blue armor (chest, shoulders, forearms, leg plates, boots), blue jingasa covering half the face, orange accents.",
+  "created_at": "2026-09-25T16:17:32.363603+00:00",
+  "plan": {
+    "overall_look": "Side-view samurai in a warm sepia palette. Light skin peeks at face lower half, neck, and hands. Yellow cloth layers (kimono sleeves, hakama) sit under rigid blue armor plates: do chest, sode shoulders, kote forearms, suneate shin plates, and blue boots. A wide conical blue jingasa overhangs the head and covers the upper half of the face (eyes may be partly hidden). Thin orange cord/trim accents on brim, belts, and plate edges.",
+    "slots": {
+      "upper_arm_far": {
+        "skip": false,
+        "visual_notes": "Yellow sleeve under; blue sode shoulder plate covering upper arm with modest overhang; orange edge stitch.",
+        "parent_parts": [
+          "upper_arm_far"
+        ],
+        "body_parts": [
+          "upper_arm_far"
+        ],
+        "draw_after": "upper_arm_far",
+        "allow_overhang": true
+      },
+      "lower_arm_far": {
+        "skip": false,
+        "visual_notes": "Yellow sleeve cuff near elbow; blue kote forearm plate over lower_arm; light skin hand exposed (no glove fill on hand); orange cuff trim.",
+        "parent_parts": [
+          "lower_arm_far"
+        ],
+        "body_parts": [
+          "lower_arm_far",
+          "hand_far"
+        ],
+        "draw_after": "hand_far",
+        "allow_overhang": true
+      },
+      "upper_leg_far": {
+        "skip": false,
+        "visual_notes": "Yellow hakama cloth filling upper leg; optional small orange side cord.",
+        "parent_parts": [
+          "upper_leg_far"
+        ],
+        "body_parts": [
+          "upper_leg_far"
+        ],
+        "draw_after": "upper_leg_far",
+        "allow_overhang": true
+      },
+      "lower_leg_far": {
+        "skip": false,
+        "visual_notes": "Yellow cloth on shin under; blue suneate leg plate on shin; blue boot covering foot_far; orange plate/boot edge accents.",
+        "parent_parts": [
+          "lower_leg_far"
+        ],
+        "body_parts": [
+          "lower_leg_far",
+          "foot_far"
+        ],
+        "draw_after": "foot_far",
+        "allow_overhang": true
+      },
+      "torso": {
+        "skip": false,
+        "visual_notes": "Yellow kimono underlayer on torso mass; blue do (chest armor) plates over mid-chest with slight bulk overhang; orange belt/obi trim and plate edge lines. Light skin may show at neck opening if not covered.",
+        "parent_parts": [
+          "torso"
+        ],
+        "body_parts": [
+          "torso"
+        ],
+        "draw_after": "torso",
+        "allow_overhang": true
+      },
+      "head": {
+        "skip": false,
+        "visual_notes": "Blue jingasa (same blue as armor) with wide conical brim overhanging past the skull on +X and top; bowl covers upper half of face so only lower face/chin/light skin shows below. Orange chin-cord or brim stitch accents. Do not paint over entire head \u2014 leave lower face transparent so light skin from base shows.",
+        "parent_parts": [
+          "head"
+        ],
+        "body_parts": [
+          "head"
+        ],
+        "draw_after": "head",
+        "allow_overhang": true
+      },
+      "upper_arm_near": {
+        "skip": false,
+        "visual_notes": "Yellow sleeve under; blue sode shoulder plate covering upper arm with modest overhang; orange edge stitch.",
+        "parent_parts": [
+          "upper_arm_near"
+        ],
+        "body_parts": [
+          "upper_arm_near"
+        ],
+        "draw_after": "upper_arm_near",
+        "allow_overhang": true
+      },
+      "lower_arm_near": {
+        "skip": false,
+        "visual_notes": "Yellow sleeve cuff near elbow; blue kote forearm plate over lower_arm; light skin hand exposed (no glove fill on hand); orange cuff trim.",
+        "parent_parts": [
+          "lower_arm_near"
+        ],
+        "body_parts": [
+          "lower_arm_near",
+          "hand_near"
+        ],
+        "draw_after": "hand_near",
+        "allow_overhang": true
+      },
+      "upper_leg_near": {
+        "skip": false,
+        "visual_notes": "Yellow hakama cloth filling upper leg; optional small orange side cord.",
+        "parent_parts": [
+          "upper_leg_near"
+        ],
+        "body_parts": [
+          "upper_leg_near"
+        ],
+        "draw_after": "upper_leg_near",
+        "allow_overhang": true
+      },
+      "lower_leg_near": {
+        "skip": false,
+        "visual_notes": "Yellow cloth on shin under; blue suneate leg plate on shin; blue boot covering foot_near; orange plate/boot edge accents.",
+        "parent_parts": [
+          "lower_leg_near"
+        ],
+        "body_parts": [
+          "lower_leg_near",
+          "foot_near"
+        ],
+        "draw_after": "foot_near",
+        "allow_overhang": true
+      }
+    }
+  },
+  "user_facing_summary": "Outfit plan for `samurai`\nBrief: Samurai warrior with jingasa. Sepia palette: yellow clothing, light skin, blue armor (chest, shoulders, forearms, leg plates, boots), blue jingasa covering half the face, orange accents.\n\nOverall look:\nSide-view samurai in a warm sepia palette. Light skin peeks at face lower half, neck, and hands. Yellow cloth layers (kimono sleeves, hakama) sit under rigid blue armor plates: do chest, sode shoulders, kote forearms, suneate shin plates, and blue boots. A wide conical blue jingasa overhangs the head and covers the upper half of the face (eyes may be partly hidden). Thin orange cord/trim accents on brim, belts, and plate edges.\n\nDesign layers (same 10 names as base/layers/):\n  - upper_arm_far: paint on [upper_arm_far] (pose parent=upper_arm_far) \u2014 Yellow sleeve under; blue sode shoulder plate covering upper arm with modest overhang; orange edge stitch.\n  - lower_arm_far: paint on [lower_arm_far, hand_far] (pose parent=lower_arm_far) \u2014 Yellow sleeve cuff near elbow; blue kote forearm plate over lower_arm; light skin hand exposed (no glove fill on hand); orange cuff trim.\n  - upper_leg_far: paint on [upper_leg_far] (pose parent=upper_leg_far) \u2014 Yellow hakama cloth filling upper leg; optional small orange side cord.\n  - lower_leg_far: paint on [lower_leg_far, foot_far] (pose parent=lower_leg_far) \u2014 Yellow cloth on shin under; blue suneate leg plate on shin; blue boot covering foot_far; orange plate/boot edge accents.\n  - torso: paint on [torso] (pose parent=torso) \u2014 Yellow kimono underlayer on torso mass; blue do (chest armor) plates over mid-chest with slight bulk overhang; orange belt/obi trim and plate edge lines. Light skin may show at neck opening if not covered.\n  - head: paint on [head] (pose parent=head) \u2014 Blue jingasa (same blue as armor) with wide conical brim overhanging past the skull on +X and top; bowl covers upper half of face so only lower face/chin/light skin shows below. Orange chin-cord or brim stitch accents. Do not paint over entire head \u2014 leave lower face transparent so light skin from base shows.\n  - upper_arm_near: paint on [upper_arm_near] (pose parent=upper_arm_near) \u2014 Yellow sleeve under; blue sode shoulder plate covering upper arm with modest overhang; orange edge stitch.\n  - lower_arm_near: paint on [lower_arm_near, hand_near] (pose parent=lower_arm_near) \u2014 Yellow sleeve cuff near elbow; blue kote forearm plate over lower_arm; light skin hand exposed (no glove fill on hand); orange cuff trim.\n  - upper_leg_near: paint on [upper_leg_near] (pose parent=upper_leg_near) \u2014 Yellow hakama cloth filling upper leg; optional small orange side cord.\n  - lower_leg_near: paint on [lower_leg_near, foot_near] (pose parent=lower_leg_near) \u2014 Yellow cloth on shin under; blue suneate leg plate on shin; blue boot covering foot_near; orange plate/boot edge accents.\n\nPainting rule: for each active export layer, prepare_outfit_slot_reference then paint ONLY via MCP tools onto design/layers/<layer>.png (fill_parts_on_slot for that layer's body_parts silhouette; fill_rect / draw_line / paint_pixels for details). FORBIDDEN: Shell/PIL scripts or external image generators. Each design file rigid-rotates 1:1 with its body part (no multi-parent split). Clothing MAY overhang the body silhouette \u2014 body underlay is alignment reference, not a clip mask; keep proportions sensible. If this matches, say OK and paint layers; otherwise revise the plan.",
+  "slot_specs": [
+    {
+      "slot": "upper_arm_far",
+      "parent_parts": [
+        "upper_arm_far"
+      ],
+      "body_parts": [
+        "upper_arm_far"
+      ],
+      "draw_after": "upper_arm_far",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Far upper-arm design (sleeves / arm armor). Single parent: upper_arm_far. Skip if bare upper arm.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "lower_arm_far",
+      "parent_parts": [
+        "lower_arm_far"
+      ],
+      "body_parts": [
+        "lower_arm_far",
+        "hand_far"
+      ],
+      "draw_after": "hand_far",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Far lower-arm + hand design (sleeve cuff / gloves). Export layer includes hand_far. Single parent: lower_arm_far.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "upper_leg_far",
+      "parent_parts": [
+        "upper_leg_far"
+      ],
+      "body_parts": [
+        "upper_leg_far"
+      ],
+      "draw_after": "upper_leg_far",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Far upper-leg design (hakama / pants / thigh armor). Single parent: upper_leg_far.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "lower_leg_far",
+      "parent_parts": [
+        "lower_leg_far"
+      ],
+      "body_parts": [
+        "lower_leg_far",
+        "foot_far"
+      ],
+      "draw_after": "foot_far",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Far lower-leg + foot design (shin armor / boots). Export layer includes foot_far. Single parent: lower_leg_far.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "torso",
+      "parent_parts": [
+        "torso"
+      ],
+      "body_parts": [
+        "torso"
+      ],
+      "draw_after": "torso",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Torso design (do / shirt / chest armor). Single parent: torso. May be bulkier than torso silhouette.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "head",
+      "parent_parts": [
+        "head"
+      ],
+      "body_parts": [
+        "head"
+      ],
+      "draw_after": "head",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Head design (jingasa / helmet / hood). Single parent: head. May overhang head silhouette; keep scale sensible.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "upper_arm_near",
+      "parent_parts": [
+        "upper_arm_near"
+      ],
+      "body_parts": [
+        "upper_arm_near"
+      ],
+      "draw_after": "upper_arm_near",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Near upper-arm design (sleeves / arm armor). Single parent: upper_arm_near. Skip if bare upper arm.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "lower_arm_near",
+      "parent_parts": [
+        "lower_arm_near"
+      ],
+      "body_parts": [
+        "lower_arm_near",
+        "hand_near"
+      ],
+      "draw_after": "hand_near",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Near lower-arm + hand design (sleeve cuff / gloves). Export layer includes hand_near. Single parent: lower_arm_near.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "upper_leg_near",
+      "parent_parts": [
+        "upper_leg_near"
+      ],
+      "body_parts": [
+        "upper_leg_near"
+      ],
+      "draw_after": "upper_leg_near",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Near upper-leg design (hakama / pants / thigh armor). Single parent: upper_leg_near.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "lower_leg_near",
+      "parent_parts": [
+        "lower_leg_near"
+      ],
+      "body_parts": [
+        "lower_leg_near",
+        "foot_near"
+      ],
+      "draw_after": "foot_near",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Near lower-leg + foot design (shin armor / boots). Export layer includes foot_near. Single parent: lower_leg_near.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    }
+  ]
+}

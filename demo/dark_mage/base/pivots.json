@@ -1,0 +1,167 @@
+{
+  "width": 90,
+  "height": 128,
+  "armature": "standard_90x128",
+  "pose": "side_idle_apose",
+  "facing": "+X",
+  "coordinate_space": "part_map pixel space; origin top-left; x/y are midpoints of parent/child boundary pixel centers (shoulder/hip far+near use per-limb lateral_limb_top on each limb's top-row center; knees use leg_column_center X on designed far/near shin columns and a shared anatomic knee-line Y)",
+  "description": "Hierarchical 2D articulation pivots for base idle. Parent is rootward; rotating about the pivot moves the child and its descendants. Authored 90\u00d7128 silhouette: shoulder_far/near and hip_far/near are independent lateral attachments (top mass center of each limb), not a shared stack XY. knee_far/near X sits on the designed shin-column centerline at the knee band; both knees share one Y (mean of upper/lower boundary heights). Wrist/ankle not included in this pass.",
+  "lateral_joints": {
+    "shoulder_far": {
+      "x": 54.5,
+      "y": 40.5
+    },
+    "shoulder_near": {
+      "x": 35.5,
+      "y": 40.5
+    },
+    "hip_far": {
+      "x": 50.5,
+      "y": 72.5
+    },
+    "hip_near": {
+      "x": 41.0,
+      "y": 72.5
+    }
+  },
+  "leg_columns": {
+    "far": {
+      "x0": 47.0,
+      "width": 6
+    },
+    "near": {
+      "x0": 36.0,
+      "width": 6
+    }
+  },
+  "skeleton": [
+    {
+      "name": "neck",
+      "parent": "torso",
+      "child": "head"
+    },
+    {
+      "name": "shoulder_far",
+      "parent": "torso",
+      "child": "upper_arm_far"
+    },
+    {
+      "name": "shoulder_near",
+      "parent": "torso",
+      "child": "upper_arm_near"
+    },
+    {
+      "name": "elbow_far",
+      "parent": "upper_arm_far",
+      "child": "lower_arm_far"
+    },
+    {
+      "name": "elbow_near",
+      "parent": "upper_arm_near",
+      "child": "lower_arm_near"
+    },
+    {
+      "name": "hip_far",
+      "parent": "torso",
+      "child": "upper_leg_far"
+    },
+    {
+      "name": "hip_near",
+      "parent": "torso",
+      "child": "upper_leg_near"
+    },
+    {
+      "name": "knee_far",
+      "parent": "upper_leg_far",
+      "child": "lower_leg_far"
+    },
+    {
+      "name": "knee_near",
+      "parent": "upper_leg_near",
+      "child": "lower_leg_near"
+    }
+  ],
+  "joints": [
+    {
+      "name": "neck",
+      "parent": "torso",
+      "child": "head",
+      "x": 44.0,
+      "y": 37.0,
+      "method": "boundary_centroid",
+      "contact_pairs": 8
+    },
+    {
+      "name": "shoulder_far",
+      "parent": "torso",
+      "child": "upper_arm_far",
+      "x": 54.5,
+      "y": 40.5,
+      "method": "lateral_limb_top",
+      "contact_pairs": 15
+    },
+    {
+      "name": "shoulder_near",
+      "parent": "torso",
+      "child": "upper_arm_near",
+      "x": 35.5,
+      "y": 40.5,
+      "method": "lateral_limb_top",
+      "contact_pairs": 20
+    },
+    {
+      "name": "elbow_far",
+      "parent": "upper_arm_far",
+      "child": "lower_arm_far",
+      "x": 60.0,
+      "y": 60.0,
+      "method": "boundary_centroid",
+      "contact_pairs": 6
+    },
+    {
+      "name": "elbow_near",
+      "parent": "upper_arm_near",
+      "child": "lower_arm_near",
+      "x": 31.6,
+      "y": 59.9,
+      "method": "boundary_centroid",
+      "contact_pairs": 5
+    },
+    {
+      "name": "hip_far",
+      "parent": "torso",
+      "child": "upper_leg_far",
+      "x": 50.5,
+      "y": 72.5,
+      "method": "lateral_limb_top",
+      "contact_pairs": 9
+    },
+    {
+      "name": "hip_near",
+      "parent": "torso",
+      "child": "upper_leg_near",
+      "x": 41.0,
+      "y": 72.5,
+      "method": "lateral_limb_top",
+      "contact_pairs": 14
+    },
+    {
+      "name": "knee_far",
+      "parent": "upper_leg_far",
+      "child": "lower_leg_far",
+      "x": 50.0,
+      "y": 104.0,
+      "method": "leg_column_center",
+      "contact_pairs": 5
+    },
+    {
+      "name": "knee_near",
+      "parent": "upper_leg_near",
+      "child": "lower_leg_near",
+      "x": 39.0,
+      "y": 104.0,
+      "method": "leg_column_center",
+      "contact_pairs": 4
+    }
+  ]
+}

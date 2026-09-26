@@ -1,0 +1,283 @@
+{
+  "schema": "spritemcp.outfit_plan.v2",
+  "plan_id": "war_orc-outfit-503cf887f786-0512cfe3",
+  "name": "war_orc",
+  "brief": "Orc warrior in heavy war armor. Sepia metal. Green skin, red eyes, open helmet, tusks. Red banner with violet mark on back tied to torso.",
+  "created_at": "2026-09-25T21:08:29.185700+00:00",
+  "plan": {
+    "overall_look": "Side-view orc warlord: green skin, red eyes, open-face war helm, tusks. Heavy sepia-metal plate on torso, shoulders, arms, thighs, greaves and boots. Red war banner with violet clan mark rises from the back, strapped to the torso plate.",
+    "slots": {
+      "upper_arm_far": {
+        "skip": false,
+        "visual_notes": "Far pauldron and upper-arm plate in sepia metal.",
+        "parent_parts": [
+          "upper_arm_far"
+        ],
+        "body_parts": [
+          "upper_arm_far"
+        ],
+        "draw_after": "upper_arm_far",
+        "allow_overhang": true
+      },
+      "lower_arm_far": {
+        "skip": false,
+        "visual_notes": "Far metallic bracer and gauntlet covering forearm and hand.",
+        "parent_parts": [
+          "lower_arm_far"
+        ],
+        "body_parts": [
+          "lower_arm_far",
+          "hand_far"
+        ],
+        "draw_after": "hand_far",
+        "allow_overhang": true
+      },
+      "upper_leg_far": {
+        "skip": false,
+        "visual_notes": "Far thigh cuisse in sepia metal.",
+        "parent_parts": [
+          "upper_leg_far"
+        ],
+        "body_parts": [
+          "upper_leg_far"
+        ],
+        "draw_after": "upper_leg_far",
+        "allow_overhang": true
+      },
+      "lower_leg_far": {
+        "skip": false,
+        "visual_notes": "Far greave and armored boot in sepia metal.",
+        "parent_parts": [
+          "lower_leg_far"
+        ],
+        "body_parts": [
+          "lower_leg_far",
+          "foot_far"
+        ],
+        "draw_after": "foot_far",
+        "allow_overhang": true
+      },
+      "torso": {
+        "skip": false,
+        "visual_notes": "Sepia metal breastplate and backplate; belt. Red banner pole and cloth on the back with violet geometric clan symbol; straps tie banner to torso.",
+        "parent_parts": [
+          "torso"
+        ],
+        "body_parts": [
+          "torso"
+        ],
+        "draw_after": "torso",
+        "allow_overhang": true
+      },
+      "head": {
+        "skip": false,
+        "visual_notes": "Green orc head skin; red eyes covering base eyes; open-face war helmet rim in sepia metal (does not cover face); visible tusks in light beige/sepia.",
+        "parent_parts": [
+          "head"
+        ],
+        "body_parts": [
+          "head"
+        ],
+        "draw_after": "head",
+        "allow_overhang": true
+      },
+      "upper_arm_near": {
+        "skip": false,
+        "visual_notes": "Near pauldron and upper-arm plate in sepia metal.",
+        "parent_parts": [
+          "upper_arm_near"
+        ],
+        "body_parts": [
+          "upper_arm_near"
+        ],
+        "draw_after": "upper_arm_near",
+        "allow_overhang": true
+      },
+      "lower_arm_near": {
+        "skip": false,
+        "visual_notes": "Near metallic bracer and gauntlet covering forearm and hand.",
+        "parent_parts": [
+          "lower_arm_near"
+        ],
+        "body_parts": [
+          "lower_arm_near",
+          "hand_near"
+        ],
+        "draw_after": "hand_near",
+        "allow_overhang": true
+      },
+      "upper_leg_near": {
+        "skip": false,
+        "visual_notes": "Near thigh cuisse in sepia metal.",
+        "parent_parts": [
+          "upper_leg_near"
+        ],
+        "body_parts": [
+          "upper_leg_near"
+        ],
+        "draw_after": "upper_leg_near",
+        "allow_overhang": true
+      },
+      "lower_leg_near": {
+        "skip": false,
+        "visual_notes": "Near greave and armored boot in sepia metal.",
+        "parent_parts": [
+          "lower_leg_near"
+        ],
+        "body_parts": [
+          "lower_leg_near",
+          "foot_near"
+        ],
+        "draw_after": "foot_near",
+        "allow_overhang": true
+      }
+    }
+  },
+  "user_facing_summary": "Outfit plan for `war_orc`\nBrief: Orc warrior in heavy war armor. Sepia metal. Green skin, red eyes, open helmet, tusks. Red banner with violet mark on back tied to torso.\n\nOverall look:\nSide-view orc warlord: green skin, red eyes, open-face war helm, tusks. Heavy sepia-metal plate on torso, shoulders, arms, thighs, greaves and boots. Red war banner with violet clan mark rises from the back, strapped to the torso plate.\n\nDesign layers (same 10 names as base/layers/):\n  - upper_arm_far: paint on [upper_arm_far] (pose parent=upper_arm_far) \u2014 Far pauldron and upper-arm plate in sepia metal.\n  - lower_arm_far: paint on [lower_arm_far, hand_far] (pose parent=lower_arm_far) \u2014 Far metallic bracer and gauntlet covering forearm and hand.\n  - upper_leg_far: paint on [upper_leg_far] (pose parent=upper_leg_far) \u2014 Far thigh cuisse in sepia metal.\n  - lower_leg_far: paint on [lower_leg_far, foot_far] (pose parent=lower_leg_far) \u2014 Far greave and armored boot in sepia metal.\n  - torso: paint on [torso] (pose parent=torso) \u2014 Sepia metal breastplate and backplate; belt. Red banner pole and cloth on the back with violet geometric clan symbol; straps tie banner to torso.\n  - head: paint on [head] (pose parent=head) \u2014 Green orc head skin; red eyes covering base eyes; open-face war helmet rim in sepia metal (does not cover face); visible tusks in light beige/sepia.\n  - upper_arm_near: paint on [upper_arm_near] (pose parent=upper_arm_near) \u2014 Near pauldron and upper-arm plate in sepia metal.\n  - lower_arm_near: paint on [lower_arm_near, hand_near] (pose parent=lower_arm_near) \u2014 Near metallic bracer and gauntlet covering forearm and hand.\n  - upper_leg_near: paint on [upper_leg_near] (pose parent=upper_leg_near) \u2014 Near thigh cuisse in sepia metal.\n  - lower_leg_near: paint on [lower_leg_near, foot_near] (pose parent=lower_leg_near) \u2014 Near greave and armored boot in sepia metal.\n\nPainting rule: for each active export layer, prepare_outfit_slot_reference then paint ONLY via MCP tools onto design/layers/<layer>.png (fill_parts_on_slot for that layer's body_parts silhouette; fill_rect / draw_line / paint_pixels for details). FORBIDDEN: Shell/PIL scripts or external image generators. Each design file rigid-rotates 1:1 with its body part (no multi-parent split). Clothing MAY overhang the body silhouette \u2014 body underlay is alignment reference, not a clip mask; keep proportions sensible. If this matches, say OK and paint layers; otherwise revise the plan.",
+  "slot_specs": [
+    {
+      "slot": "upper_arm_far",
+      "parent_parts": [
+        "upper_arm_far"
+      ],
+      "body_parts": [
+        "upper_arm_far"
+      ],
+      "draw_after": "upper_arm_far",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Far upper-arm design (sleeves / arm armor). Single parent: upper_arm_far. Skip if bare upper arm.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "lower_arm_far",
+      "parent_parts": [
+        "lower_arm_far"
+      ],
+      "body_parts": [
+        "lower_arm_far",
+        "hand_far"
+      ],
+      "draw_after": "hand_far",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Far lower-arm + hand design (sleeve cuff / gloves). Export layer includes hand_far. Single parent: lower_arm_far.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "upper_leg_far",
+      "parent_parts": [
+        "upper_leg_far"
+      ],
+      "body_parts": [
+        "upper_leg_far"
+      ],
+      "draw_after": "upper_leg_far",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Far upper-leg design (hakama / pants / thigh armor). Single parent: upper_leg_far.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "lower_leg_far",
+      "parent_parts": [
+        "lower_leg_far"
+      ],
+      "body_parts": [
+        "lower_leg_far",
+        "foot_far"
+      ],
+      "draw_after": "foot_far",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Far lower-leg + foot design (shin armor / boots). Export layer includes foot_far. Single parent: lower_leg_far.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "torso",
+      "parent_parts": [
+        "torso"
+      ],
+      "body_parts": [
+        "torso"
+      ],
+      "draw_after": "torso",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Torso design (do / shirt / chest armor). Single parent: torso. May be bulkier than torso silhouette.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "head",
+      "parent_parts": [
+        "head"
+      ],
+      "body_parts": [
+        "head"
+      ],
+      "draw_after": "head",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Head design (jingasa / helmet / hood). Single parent: head. May overhang head silhouette; keep scale sensible.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "upper_arm_near",
+      "parent_parts": [
+        "upper_arm_near"
+      ],
+      "body_parts": [
+        "upper_arm_near"
+      ],
+      "draw_after": "upper_arm_near",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Near upper-arm design (sleeves / arm armor). Single parent: upper_arm_near. Skip if bare upper arm.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "lower_arm_near",
+      "parent_parts": [
+        "lower_arm_near"
+      ],
+      "body_parts": [
+        "lower_arm_near",
+        "hand_near"
+      ],
+      "draw_after": "hand_near",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Near lower-arm + hand design (sleeve cuff / gloves). Export layer includes hand_near. Single parent: lower_arm_near.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "upper_leg_near",
+      "parent_parts": [
+        "upper_leg_near"
+      ],
+      "body_parts": [
+        "upper_leg_near"
+      ],
+      "draw_after": "upper_leg_near",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Near upper-leg design (hakama / pants / thigh armor). Single parent: upper_leg_near.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    },
+    {
+      "slot": "lower_leg_near",
+      "parent_parts": [
+        "lower_leg_near"
+      ],
+      "body_parts": [
+        "lower_leg_near",
+        "foot_near"
+      ],
+      "draw_after": "foot_near",
+      "allow_overhang": true,
+      "optional": true,
+      "description": "Near lower-leg + foot design (shin armor / boots). Export layer includes foot_near. Single parent: lower_leg_near.",
+      "overhang_note": "Clothing MAY extend outside body silhouette margins (helmet larger than head, hat brim sticking out, bulky armor). Parent body parts are alignment / proportion reference only \u2014 NOT a hard clip mask. Keep scale sensible."
+    }
+  ]
+}

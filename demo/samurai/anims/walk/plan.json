@@ -1,0 +1,117 @@
+{
+  "schema": "spritemcp.animation_plan.v1",
+  "plan_id": "samurai-walk-3509b02c58ff-86b9c6a8",
+  "name": "samurai",
+  "animation_name": "walk",
+  "intent": "Side-view (+X) looping walk cycle for armored samurai; steady march with opposite arm swing, jingasa stable on head.",
+  "contrast_with": [
+    "run",
+    "attack"
+  ],
+  "sibling_animations_considered": [
+    "attack",
+    "run"
+  ],
+  "created_at": "2026-09-26T04:31:27.548371+00:00",
+  "plan": {
+    "beats": [
+      {
+        "frame_index": 0,
+        "pose_description": "Contact: near foot plants ahead, far leg trails extended behind; near arm back, far arm forward; slight torso settle.",
+        "primary_joints": [
+          "hip_near",
+          "hip_far",
+          "knee_near",
+          "knee_far",
+          "shoulder_near",
+          "shoulder_far"
+        ]
+      },
+      {
+        "frame_index": 1,
+        "pose_description": "Recoil/down: weight on near leg, near knee flexes; far leg lifts and starts swinging forward; arms reverse slightly.",
+        "primary_joints": [
+          "knee_near",
+          "hip_far",
+          "knee_far",
+          "shoulder_near",
+          "shoulder_far"
+        ]
+      },
+      {
+        "frame_index": 2,
+        "pose_description": "Passing: legs cross under torso, far thigh coming forward mid-swing; elbows soft; jingasa stays level.",
+        "primary_joints": [
+          "hip_near",
+          "hip_far",
+          "knee_far",
+          "elbow_near",
+          "elbow_far"
+        ]
+      },
+      {
+        "frame_index": 3,
+        "pose_description": "Up/high: far foot reaches forward before plant; near leg pushes off with extended hip; arms at extreme opposite swing.",
+        "primary_joints": [
+          "hip_far",
+          "knee_far",
+          "hip_near",
+          "shoulder_near",
+          "shoulder_far"
+        ]
+      },
+      {
+        "frame_index": 4,
+        "pose_description": "Opposite contact: far foot plants ahead, near leg trails behind; arm swap (near forward, far back).",
+        "primary_joints": [
+          "hip_far",
+          "hip_near",
+          "knee_far",
+          "knee_near",
+          "shoulder_near",
+          "shoulder_far"
+        ]
+      },
+      {
+        "frame_index": 5,
+        "pose_description": "Recoil/down other side: weight on far leg, far knee flexes; near leg lifts into forward swing.",
+        "primary_joints": [
+          "knee_far",
+          "hip_near",
+          "knee_near",
+          "shoulder_near",
+          "shoulder_far"
+        ]
+      },
+      {
+        "frame_index": 6,
+        "pose_description": "Passing other side: near thigh swings forward under torso; soft elbows; even head.",
+        "primary_joints": [
+          "hip_near",
+          "hip_far",
+          "knee_near",
+          "elbow_near",
+          "elbow_far"
+        ]
+      },
+      {
+        "frame_index": 7,
+        "pose_description": "Up into next contact: near foot reaches ahead; far leg extends back push-off; arms wind toward frame-0 extremes.",
+        "primary_joints": [
+          "hip_near",
+          "knee_near",
+          "hip_far",
+          "shoulder_near",
+          "shoulder_far"
+        ]
+      }
+    ],
+    "silhouette_story": "Eight-frame side walk facing +X: contact \u2192 down \u2192 pass \u2192 up, then mirrored. Armor and jingasa ride the rigid body parts; stride reads as a deliberate armored march, not a sprint or fight.",
+    "differs_from": {
+      "attack": "Attack is a committed strike with asymmetric arm/torso wind-up; walk is a balanced cyclic stride with no strike pose.",
+      "run": "Run uses longer stride, more knee lift and arm pump; walk is a restrained armored march with shorter steps."
+    },
+    "weapon_or_style_notes": "No weapon swing \u2014 empty-hand march. Arm motion is natural opposite-to-legs pendulum for walk, not punch or sword cut."
+  },
+  "user_facing_summary": "Animation plan for `samurai` / `walk`\nIntent: Side-view (+X) looping walk cycle for armored samurai; steady march with opposite arm swing, jingasa stable on head.\n\nHow it will look:\nEight-frame side walk facing +X: contact \u2192 down \u2192 pass \u2192 up, then mirrored. Armor and jingasa ride the rigid body parts; stride reads as a deliberate armored march, not a sprint or fight.\n\nStyle: No weapon swing \u2014 empty-hand march. Arm motion is natural opposite-to-legs pendulum for walk, not punch or sword cut.\n\n8-beat outline:\n  0: Contact: near foot plants ahead, far leg trails extended behind; near arm back, far arm forward; slight torso settle. (joints: hip_near, hip_far, knee_near, knee_far, shoulder_near, shoulder_far)\n  1: Recoil/down: weight on near leg, near knee flexes; far leg lifts and starts swinging forward; arms reverse slightly. (joints: knee_near, hip_far, knee_far, shoulder_near, shoulder_far)\n  2: Passing: legs cross under torso, far thigh coming forward mid-swing; elbows soft; jingasa stays level. (joints: hip_near, hip_far, knee_far, elbow_near, elbow_far)\n  3: Up/high: far foot reaches forward before plant; near leg pushes off with extended hip; arms at extreme opposite swing. (joints: hip_far, knee_far, hip_near, shoulder_near, shoulder_far)\n  4: Opposite contact: far foot plants ahead, near leg trails behind; arm swap (near forward, far back). (joints: hip_far, hip_near, knee_far, knee_near, shoulder_near, shoulder_far)\n  5: Recoil/down other side: weight on far leg, far knee flexes; near leg lifts into forward swing. (joints: knee_far, hip_near, knee_near, shoulder_near, shoulder_far)\n  6: Passing other side: near thigh swings forward under torso; soft elbows; even head. (joints: hip_near, hip_far, knee_near, elbow_near, elbow_far)\n  7: Up into next contact: near foot reaches ahead; far leg extends back push-off; arms wind toward frame-0 extremes. (joints: hip_near, knee_near, hip_far, shoulder_near, shoulder_far)\n\nDiffers from other clips:\n  vs attack: Attack is a committed strike with asymmetric arm/torso wind-up; walk is a balanced cyclic stride with no strike pose.\n  vs run: Run uses longer stride, more knee lift and arm pump; walk is a restrained armored march with shorter steps.\n\nIf this matches what you want, say OK and frames can be built; otherwise revise the plan first."
+}

@@ -1,0 +1,254 @@
+{
+  "schema": "spritemcp.shading_plan.v1",
+  "plan_id": "dark_mage-shade-ebf82dd28b0a-f77bfb37",
+  "name": "dark_mage",
+  "brief": "Hard one-step shadows for dark fantasy mage robes: light from top-front/+X-up; undersides, under chin/hood, armpits, sash fold, far limbs slightly darker, under feet.",
+  "outfit_plan_id": "dark_mage-outfit-89f0e51cbb61-a6520816",
+  "created_at": "2026-09-25T19:48:03.052854+00:00",
+  "plan": {
+    "light_direction": "top-front / +X-up",
+    "rules": [
+      "one_step_darker",
+      "no_gradients"
+    ],
+    "overall_notes": "Hard 1\u20132px shade bands only. Violet/charcoal robe locals step toward near-black; pale face steps to shadow_beige; crimson sash to muted plum. Far limbs slightly darker. Eyes stay on base.",
+    "layers": {
+      "upper_arm_far": {
+        "skip": false,
+        "shade_notes": "Far sleeve underside + armpit fold; slightly darker than near.",
+        "strokes": [
+          {
+            "intent": "underside_bottom_edge",
+            "region": "underside",
+            "color_role": "near_black",
+            "color_hex": "#0E151C"
+          },
+          {
+            "intent": "armpit_fold",
+            "region": "armpit",
+            "color_role": "near_black",
+            "color_hex": "#0E151C"
+          }
+        ],
+        "body_parts": [
+          "upper_arm_far"
+        ]
+      },
+      "lower_arm_far": {
+        "skip": false,
+        "shade_notes": "Far cuff underside and glove underside darker.",
+        "strokes": [
+          {
+            "intent": "underside_bottom_edge",
+            "region": "cuff",
+            "color_role": "near_black",
+            "color_hex": "#0E151C"
+          }
+        ],
+        "body_parts": [
+          "lower_arm_far",
+          "hand_far"
+        ]
+      },
+      "upper_leg_far": {
+        "skip": false,
+        "shade_notes": "Far robe skirt hem + far-limb darken.",
+        "strokes": [
+          {
+            "intent": "underside_bottom_edge",
+            "region": "hem",
+            "color_role": "near_black",
+            "color_hex": "#0E151C"
+          }
+        ],
+        "body_parts": [
+          "upper_leg_far"
+        ]
+      },
+      "lower_leg_far": {
+        "skip": false,
+        "shade_notes": "Boot sole and lower shin underside.",
+        "strokes": [
+          {
+            "intent": "under_feet",
+            "region": "sole",
+            "color_role": "near_black",
+            "color_hex": "#0E151C"
+          }
+        ],
+        "body_parts": [
+          "lower_leg_far",
+          "foot_far"
+        ]
+      },
+      "torso": {
+        "skip": false,
+        "shade_notes": "Hem underside band; under sash fold; armpit-side charcoal panels slightly darker.",
+        "strokes": [
+          {
+            "intent": "underside_bottom_edge",
+            "region": "hem",
+            "color_role": "near_black",
+            "color_hex": "#0E151C"
+          },
+          {
+            "intent": "under_chest_waist_fold",
+            "region": "under_sash",
+            "color_role": "muted_plum",
+            "color_hex": "#291A1F"
+          },
+          {
+            "intent": "underside",
+            "region": "cloak_sides",
+            "color_role": "near_black",
+            "color_hex": "#0E151C"
+          }
+        ],
+        "body_parts": [
+          "torso"
+        ]
+      },
+      "head": {
+        "skip": false,
+        "shade_notes": "Under-chin and lower hood edge darker charcoal; brow band already present; face cheek underside #A08884. Do not cover eyes.",
+        "strokes": [
+          {
+            "intent": "under_chin",
+            "region": "under_chin",
+            "color_role": "near_black",
+            "color_hex": "#0E151C"
+          },
+          {
+            "intent": "underside",
+            "region": "hood_lower",
+            "color_role": "near_black",
+            "color_hex": "#0E151C"
+          }
+        ],
+        "body_parts": [
+          "head"
+        ]
+      },
+      "upper_arm_near": {
+        "skip": false,
+        "shade_notes": "Near sleeve underside + armpit fold.",
+        "strokes": [
+          {
+            "intent": "underside_bottom_edge",
+            "region": "underside",
+            "color_role": "near_black",
+            "color_hex": "#0E151C"
+          },
+          {
+            "intent": "armpit_fold",
+            "region": "armpit",
+            "color_role": "near_black",
+            "color_hex": "#0E151C"
+          }
+        ],
+        "body_parts": [
+          "upper_arm_near"
+        ]
+      },
+      "lower_arm_near": {
+        "skip": false,
+        "shade_notes": "Near cuff underside and glove underside.",
+        "strokes": [
+          {
+            "intent": "underside_bottom_edge",
+            "region": "cuff",
+            "color_role": "near_black",
+            "color_hex": "#0E151C"
+          }
+        ],
+        "body_parts": [
+          "lower_arm_near",
+          "hand_near"
+        ]
+      },
+      "upper_leg_near": {
+        "skip": false,
+        "shade_notes": "Near robe skirt hem underside.",
+        "strokes": [
+          {
+            "intent": "underside_bottom_edge",
+            "region": "hem",
+            "color_role": "near_black",
+            "color_hex": "#0E151C"
+          }
+        ],
+        "body_parts": [
+          "upper_leg_near"
+        ]
+      },
+      "lower_leg_near": {
+        "skip": false,
+        "shade_notes": "Boot sole and lower shin underside.",
+        "strokes": [
+          {
+            "intent": "under_feet",
+            "region": "sole",
+            "color_role": "near_black",
+            "color_hex": "#0E151C"
+          }
+        ],
+        "body_parts": [
+          "lower_leg_near",
+          "foot_near"
+        ]
+      }
+    }
+  },
+  "user_facing_summary": "Shading plan for `dark_mage`\nBrief: Hard one-step shadows for dark fantasy mage robes: light from top-front/+X-up; undersides, under chin/hood, armpits, sash fold, far limbs slightly darker, under feet.\n\nLight: top-front / +X-up\nRules: one_step_darker, no_gradients\n\nOverall:\nHard 1\u20132px shade bands only. Violet/charcoal robe locals step toward near-black; pale face steps to shadow_beige; crimson sash to muted plum. Far limbs slightly darker. Eyes stay on base.\n\nPer design layer (paint shadows on design/layers/ only):\n  - upper_arm_far (2 stroke intent(s)): Far sleeve underside + armpit fold; slightly darker than near.\n      \u00b7 [underside] underside_bottom_edge \u2192 near_black (#0E151C)\n      \u00b7 [armpit] armpit_fold \u2192 near_black (#0E151C)\n  - lower_arm_far (1 stroke intent(s)): Far cuff underside and glove underside darker.\n      \u00b7 [cuff] underside_bottom_edge \u2192 near_black (#0E151C)\n  - upper_leg_far (1 stroke intent(s)): Far robe skirt hem + far-limb darken.\n      \u00b7 [hem] underside_bottom_edge \u2192 near_black (#0E151C)\n  - lower_leg_far (1 stroke intent(s)): Boot sole and lower shin underside.\n      \u00b7 [sole] under_feet \u2192 near_black (#0E151C)\n  - torso (3 stroke intent(s)): Hem underside band; under sash fold; armpit-side charcoal panels slightly darker.\n      \u00b7 [hem] underside_bottom_edge \u2192 near_black (#0E151C)\n      \u00b7 [under_sash] under_chest_waist_fold \u2192 muted_plum (#291A1F)\n      \u00b7 [cloak_sides] underside \u2192 near_black (#0E151C)\n  - head (2 stroke intent(s)): Under-chin and lower hood edge darker charcoal; brow band already present; face cheek underside #A08884. Do not cover eyes.\n      \u00b7 [under_chin] under_chin \u2192 near_black (#0E151C)\n      \u00b7 [hood_lower] underside \u2192 near_black (#0E151C)\n  - upper_arm_near (2 stroke intent(s)): Near sleeve underside + armpit fold.\n      \u00b7 [underside] underside_bottom_edge \u2192 near_black (#0E151C)\n      \u00b7 [armpit] armpit_fold \u2192 near_black (#0E151C)\n  - lower_arm_near (1 stroke intent(s)): Near cuff underside and glove underside.\n      \u00b7 [cuff] underside_bottom_edge \u2192 near_black (#0E151C)\n  - upper_leg_near (1 stroke intent(s)): Near robe skirt hem underside.\n      \u00b7 [hem] underside_bottom_edge \u2192 near_black (#0E151C)\n  - lower_leg_near (1 stroke intent(s)): Boot sole and lower shin underside.\n      \u00b7 [sole] under_feet \u2192 near_black (#0E151C)\n\nShade palette (one darker step from local flat color):\n  - off_white (#DEC1B5) \u2192 shadow_beige (#A08884)\n  - shadow_beige (#A08884) \u2192 muted_plum (#291A1F)\n  - deep_red (#790F19) \u2192 muted_plum (#291A1F)\n  - muted_plum (#291A1F) \u2192 muted_plum_alt (#3D2334)\n  - muted_plum_alt (#3D2334) \u2192 near_black (#0E151C)\n  - near_black_alt (#17171D) \u2192 near_black (#0E151C)\n  - near_black (#0E151C) \u2192 near_black (#0E151C)\n\nApply with MCP paint tools only (fill_rect / draw_line / paint_pixels / paint_from_commands) on design layers \u2014 hard 1px\u20132px bands, no gradients, no Shell/PIL. Do not rewrite base geometry. Eyes live on the naked base head layer \u2014 shade design/head clothing only; do not clear or flood the head in a way that strips base eyes from compose underlays. Then compose_character (or re-compose). If this matches, say OK; otherwise revise the plan.",
+  "shade_palette": [
+    {
+      "local_role": "off_white",
+      "local_hex": "#DEC1B5",
+      "shade_role": "shadow_beige",
+      "shade_hex": "#A08884"
+    },
+    {
+      "local_role": "shadow_beige",
+      "local_hex": "#A08884",
+      "shade_role": "muted_plum",
+      "shade_hex": "#291A1F"
+    },
+    {
+      "local_role": "deep_red",
+      "local_hex": "#790F19",
+      "shade_role": "muted_plum",
+      "shade_hex": "#291A1F"
+    },
+    {
+      "local_role": "muted_plum",
+      "local_hex": "#291A1F",
+      "shade_role": "muted_plum_alt",
+      "shade_hex": "#3D2334"
+    },
+    {
+      "local_role": "muted_plum_alt",
+      "local_hex": "#3D2334",
+      "shade_role": "near_black",
+      "shade_hex": "#0E151C"
+    },
+    {
+      "local_role": "near_black_alt",
+      "local_hex": "#17171D",
+      "shade_role": "near_black",
+      "shade_hex": "#0E151C"
+    },
+    {
+      "local_role": "near_black",
+      "local_hex": "#0E151C",
+      "shade_role": "near_black",
+      "shade_hex": "#0E151C"
+    }
+  ],
+  "style_notes": {
+    "design_layers_only": true,
+    "no_base_rewrite": true,
+    "no_fill_parts_bake": true,
+    "eyes": "Eyes live on the naked base head layer \u2014 shade design/head clothing only; do not clear or flood the head in a way that strips base eyes from compose underlays.",
+    "canvas": "90x128"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "armature": "standard_90x128",
+  "source_dir": "C:\\Users\\nicol\\AppData\\Local\\uv\\cache\\archive-v0\\aIOw3OVBku5-nmruow6i-\\Lib\\site-packages\\spritemcp\\authored_base",
+  "canvas": {
+    "w": 90,
+    "h": 128
+  },
+  "eyes_pixels": 8,
+  "note": "Geometry imported from user-authored base/ PNGs; eyes.png is required and always composited onto the head (visual detail, not a skeleton part id)."
+}

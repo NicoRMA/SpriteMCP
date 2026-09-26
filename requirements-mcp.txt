@@ -1,0 +1,2 @@
+# Same as core — mcp is required for SpriteMCP
+-r requirements.txt

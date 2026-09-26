@@ -1,0 +1,113 @@
+{
+  "schema": "sprite_gen.animation_plan.v1",
+  "plan_id": "samurai-attack-20a96c6ad617-4ae73da6",
+  "name": "samurai",
+  "animation_name": "attack",
+  "intent": "Side-view (+X) two-handed katana overhead cut: feet stay in a slight open static stance; both arms/forearms rotate until hands coincide on an imagined katana grip, raise the blade overhead, then slash down through a vertical cut.",
+  "contrast_with": [
+    "walk",
+    "run"
+  ],
+  "sibling_animations_considered": [
+    "run",
+    "walk"
+  ],
+  "created_at": "2026-09-25T17:06:13.279896+00:00",
+  "plan": {
+    "beats": [
+      {
+        "frame_index": 0,
+        "pose_description": "Ready: feet slightly open and planted (static for whole clip); both hands already meeting on an imagined katana grip held in front of the chest/waist, elbows bent so forearms converge.",
+        "primary_joints": [
+          "shoulder_near",
+          "shoulder_far",
+          "elbow_near",
+          "elbow_far",
+          "hip_near",
+          "hip_far"
+        ]
+      },
+      {
+        "frame_index": 1,
+        "pose_description": "Wind-up start: legs unchanged; both arms lift together as one unit, keeping hands locked on the shared grip, katana rising toward the head.",
+        "primary_joints": [
+          "shoulder_near",
+          "shoulder_far",
+          "elbow_near",
+          "elbow_far"
+        ]
+      },
+      {
+        "frame_index": 2,
+        "pose_description": "Raise mid: arms continue upward in sync; elbows adjust so near and far forearms stay coincident on the grip; blade climbs above the jingasa line.",
+        "primary_joints": [
+          "shoulder_near",
+          "shoulder_far",
+          "elbow_near",
+          "elbow_far",
+          "neck"
+        ]
+      },
+      {
+        "frame_index": 3,
+        "pose_description": "Apex: katana fully overhead (or slightly behind the head); both upper arms raised and stacked, forearms meeting on the grip above; slight neck lean into the cut prep; feet still static open stance.",
+        "primary_joints": [
+          "shoulder_near",
+          "shoulder_far",
+          "elbow_near",
+          "elbow_far",
+          "neck"
+        ]
+      },
+      {
+        "frame_index": 4,
+        "pose_description": "Slash start: both arms begin the downward cut as one rigid two-hand grip; blade arcs from overhead toward forward/+X; legs still planted.",
+        "primary_joints": [
+          "shoulder_near",
+          "shoulder_far",
+          "elbow_near",
+          "elbow_far"
+        ]
+      },
+      {
+        "frame_index": 5,
+        "pose_description": "Slash mid: arms sweep through horizontal/chest height still locked together; strongest silhouette of the vertical tajo.",
+        "primary_joints": [
+          "shoulder_near",
+          "shoulder_far",
+          "elbow_near",
+          "elbow_far"
+        ]
+      },
+      {
+        "frame_index": 6,
+        "pose_description": "Impact/follow-through: two-hand grip finishes low-forward; elbows extend the cut past the waist toward +X; weight stays on the static open stance.",
+        "primary_joints": [
+          "shoulder_near",
+          "shoulder_far",
+          "elbow_near",
+          "elbow_far",
+          "neck"
+        ]
+      },
+      {
+        "frame_index": 7,
+        "pose_description": "Settle: cut ends with blade low-front, hands still together on the grip; tiny settle of elbows/neck, feet unchanged \u2014 readable end pose of the overhead slash.",
+        "primary_joints": [
+          "shoulder_near",
+          "shoulder_far",
+          "elbow_near",
+          "elbow_far",
+          "neck"
+        ]
+      }
+    ],
+    "silhouette_story": "Eight-frame side attack facing +X: planted open stance never steps. Arms lock together as if gripping a two-handed katana, raise the blade overhead, then deliver a single downward slash through the front. Reads as a deliberate shomen/jodan cut, not a walk, run, or punch.",
+    "differs_from": {
+      "walk": "Walk cycles opposite-limb stride with marching arm pendulum; attack keeps feet static and drives both arms together through an overhead raise and downward cut.",
+      "run": "Run is airborne locomotor with opposite arm pump and high knee flight; attack is a rooted two-hand sword cut with coinciding hands and no stride."
+    },
+    "weapon_or_style_notes": "Imagined two-handed katana (no separate weapon layer): near and far shoulders/elbows must be authored so hands visually coincide on one grip. Motion is raise-to-overhead then vertical/forward downward tajo \u2014 not a one-hand slash, jab, or empty-hand punch."
+  },
+  "user_facing_summary": "Animation plan for `samurai` / `attack`\nIntent: Side-view (+X) two-handed katana overhead cut: feet stay in a slight open static stance; both arms/forearms rotate until hands coincide on an imagined katana grip, raise the blade overhead, then slash down through a vertical cut.\n\nHow it will look:\nEight-frame side attack facing +X: planted open stance never steps. Arms lock together as if gripping a two-handed katana, raise the blade overhead, then deliver a single downward slash through the front. Reads as a deliberate shomen/jodan cut, not a walk, run, or punch.\n\nStyle: Imagined two-handed katana (no separate weapon layer): near and far shoulders/elbows must be authored so hands visually coincide on one grip. Motion is raise-to-overhead then vertical/forward downward tajo \u2014 not a one-hand slash, jab, or empty-hand punch.\n\n8-beat outline:\n  0: Ready: feet slightly open and planted (static for whole clip); both hands already meeting on an imagined katana grip held in front of the chest/waist, elbows bent so forearms converge. (joints: shoulder_near, shoulder_far, elbow_near, elbow_far, hip_near, hip_far)\n  1: Wind-up start: legs unchanged; both arms lift together as one unit, keeping hands locked on the shared grip, katana rising toward the head. (joints: shoulder_near, shoulder_far, elbow_near, elbow_far)\n  2: Raise mid: arms continue upward in sync; elbows adjust so near and far forearms stay coincident on the grip; blade climbs above the jingasa line. (joints: shoulder_near, shoulder_far, elbow_near, elbow_far, neck)\n  3: Apex: katana fully overhead (or slightly behind the head); both upper arms raised and stacked, forearms meeting on the grip above; slight neck lean into the cut prep; feet still static open stance. (joints: shoulder_near, shoulder_far, elbow_near, elbow_far, neck)\n  4: Slash start: both arms begin the downward cut as one rigid two-hand grip; blade arcs from overhead toward forward/+X; legs still planted. (joints: shoulder_near, shoulder_far, elbow_near, elbow_far)\n  5: Slash mid: arms sweep through horizontal/chest height still locked together; strongest silhouette of the vertical tajo. (joints: shoulder_near, shoulder_far, elbow_near, elbow_far)\n  6: Impact/follow-through: two-hand grip finishes low-forward; elbows extend the cut past the waist toward +X; weight stays on the static open stance. (joints: shoulder_near, shoulder_far, elbow_near, elbow_far, neck)\n  7: Settle: cut ends with blade low-front, hands still together on the grip; tiny settle of elbows/neck, feet unchanged \u2014 readable end pose of the overhead slash. (joints: shoulder_near, shoulder_far, elbow_near, elbow_far, neck)\n\nDiffers from other clips:\n  vs walk: Walk cycles opposite-limb stride with marching arm pendulum; attack keeps feet static and drives both arms together through an overhead raise and downward cut.\n  vs run: Run is airborne locomotor with opposite arm pump and high knee flight; attack is a rooted two-hand sword cut with coinciding hands and no stride.\n\nIf this matches what you want, say OK and frames can be built; otherwise revise the plan first."
+}

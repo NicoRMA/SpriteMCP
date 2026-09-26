@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "SpriteMCP": {
+      "command": "uvx",
+      "args": [
+        "--native-tls",
+        "--from",
+        "git+https://github.com/NicoRMA/SpriteMCP.git",
+        "spritemcp"
+      ],
+      "env": {
+        "UV_NATIVE_TLS": "1"
+      }
+    }
+  }
+}

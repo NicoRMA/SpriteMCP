@@ -1,0 +1,121 @@
+{
+  "character": "samurai",
+  "animation_name": "attack",
+  "frame_index": 0,
+  "finalized": true,
+  "frame_count": 8,
+  "angle_units": "degrees",
+  "angle_convention": "Degrees from rest (base idle). Positive = counterclockwise in part-map pixel space (origin top-left, Y down). For +X-facing: negative hip/shoulder \u2248 forward, positive \u2248 back; positive knee \u2248 flexion (shin toward -X).",
+  "joint_names": [
+    "neck",
+    "shoulder_far",
+    "shoulder_near",
+    "elbow_far",
+    "elbow_near",
+    "hip_far",
+    "hip_near",
+    "knee_far",
+    "knee_near"
+  ],
+  "angles": {
+    "neck": 0.0,
+    "shoulder_far": 43.0,
+    "shoulder_near": -42.0,
+    "elbow_far": -120.0,
+    "elbow_near": -30.0,
+    "hip_far": -14.0,
+    "hip_near": 14.0,
+    "knee_far": 4.0,
+    "knee_near": 4.0
+  },
+  "joints": [
+    {
+      "name": "neck",
+      "parent": "torso",
+      "child": "head",
+      "x": 44.0,
+      "y": 37.0,
+      "angle_deg": 0.0
+    },
+    {
+      "name": "shoulder_far",
+      "parent": "torso",
+      "child": "upper_arm_far",
+      "x": 54.5,
+      "y": 40.5,
+      "angle_deg": 43.0
+    },
+    {
+      "name": "shoulder_near",
+      "parent": "torso",
+      "child": "upper_arm_near",
+      "x": 35.5,
+      "y": 40.5,
+      "angle_deg": -42.0
+    },
+    {
+      "name": "elbow_far",
+      "parent": "upper_arm_far",
+      "child": "lower_arm_far",
+      "x": 45.22,
+      "y": 58.51,
+      "angle_deg": -120.0
+    },
+    {
+      "name": "elbow_near",
+      "parent": "upper_arm_near",
+      "child": "lower_arm_near",
+      "x": 45.58,
+      "y": 57.53,
+      "angle_deg": -30.0
+    },
+    {
+      "name": "hip_far",
+      "parent": "torso",
+      "child": "upper_leg_far",
+      "x": 50.5,
+      "y": 72.5,
+      "angle_deg": -14.0
+    },
+    {
+      "name": "hip_near",
+      "parent": "torso",
+      "child": "upper_leg_near",
+      "x": 41.0,
+      "y": 72.5,
+      "angle_deg": 14.0
+    },
+    {
+      "name": "knee_far",
+      "parent": "upper_leg_far",
+      "child": "lower_leg_far",
+      "x": 57.64,
+      "y": 103.19,
+      "angle_deg": 4.0
+    },
+    {
+      "name": "knee_near",
+      "parent": "upper_leg_near",
+      "child": "lower_leg_near",
+      "x": 31.44,
+      "y": 102.58,
+      "angle_deg": 4.0
+    }
+  ],
+  "limitations": "Layer rotate via one Pillow BICUBIC affine per part (composed hierarchy, expand=False pivot-fixed), alpha-composite in DRAW_ORDER. Soft resample alpha is kept (no hard threshold morph). Hands/feet follow lower limbs (no wrist/ankle). When design layers exist, each export-layer PNG rigid-rotates 1:1 with its single parent (same name as base/layers/) and inserts after draw_after \u2014 body is not a clip; no multi-parent mask split.",
+  "start_pose_source": "rest",
+  "schema": "sprite_gen.frame_pose.v1",
+  "dressed": true,
+  "design_slots": [
+    "upper_arm_far",
+    "lower_arm_far",
+    "upper_leg_far",
+    "lower_leg_far",
+    "torso",
+    "head",
+    "upper_arm_near",
+    "lower_arm_near",
+    "upper_leg_near",
+    "lower_leg_near"
+  ]
+}
