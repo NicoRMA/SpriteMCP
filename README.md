@@ -79,7 +79,7 @@ Two-handed katana strike. Feet slightly apart and static. Hands locked in the sa
 
 **Initial prompt**
 
-> Crea un personaje vagabundo del desierto, con vendas en todo el cuerpo, color de piel moreno. Ojos amarillos.
+> Create a desert wanderer character, with bandages covering the whole body and brown skin. Yellow eyes.
 
 <img src="demo/desert_wanderer/design/compose_preview_scaled.png" alt="Desert wanderer rest pose" height="200" />
 
